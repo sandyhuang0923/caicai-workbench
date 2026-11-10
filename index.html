@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 阅读变现 商业私教陪跑</title>
+<style>
+:root{
+  --bg:#F7F4FC; --paper:#fff; --ink:#37265E; --ink2:#5C4A87; --ink3:#8B82A6;
+  --hair:#E7E1F4; --hair2:#F2EEFB;
+  --accent:#3D2A73; --accent-s:#F1ECFB; --accent-l:#DCD3F0;
+  --blue:#3B5CA8; --blue-s:#EDF1FA;
+  --gold:#A8842E; --gold-s:#FAF4E6;
+  --rose:#C4437F; --rose-s:#FCF0F6;
+  --ok:#3F6B57; --ok-s:#eef4f0;
+  --r:20px; --r-s:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB",sans-serif;
+  font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased;letter-spacing:.005em}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;font-size:inherit}
+textarea,input{width:100%;font-family:inherit;font-size:14.5px;padding:12px 14px;
+  border:1px solid var(--hair);border-radius:var(--r-s);background:#fdfdfc;color:var(--ink);
+  outline:none;transition:.18s;line-height:1.7}
+textarea:focus,input:focus{border-color:var(--accent);background:#fff;box-shadow:0 0 0 3px rgba(61,42,115,.10)}
+textarea{resize:vertical;min-height:70px}
+::selection{background:var(--accent-l)}
+
+/* ═══ 布局 ═══ */
+.shell{display:flex;max-width:1360px;margin:0 auto;min-height:100vh}
+
+/* ═══ 左侧导航 ═══ */
+.side{width:288px;flex:none;padding:40px 26px 40px 36px;border-right:1px solid var(--hair);
+  position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--bg)}
+@media(max-width:1080px){
+  .shell{display:block}
+  .side{width:auto;height:auto;position:static;border-right:none;border-bottom:1px solid var(--hair);
+    padding:26px 22px}
+}
+.brand{margin-bottom:34px}
+.brand .bn{font-size:19px;font-weight:500;letter-spacing:.02em;line-height:1.4}
+.brand .bs{font-size:12px;color:var(--ink3);margin-top:7px;letter-spacing:.06em}
+.brand .bt{font-size:13px;color:var(--ink2);margin-top:14px;line-height:1.6}
+
+.navl{font-size:11px;color:var(--ink3);letter-spacing:.12em;margin:30px 0 12px;font-weight:500}
+.stage{display:block;width:100%;text-align:left;padding:11px 13px;border-radius:var(--r-s);
+  margin-bottom:4px;transition:.18s;position:relative}
+.stage:hover{background:#F2EEFB}
+.stage.on{background:var(--paper);box-shadow:inset 3px 0 0 var(--accent),0 2px 10px rgba(26,25,23,.055)}
+.stage .sno{font-size:11px;color:var(--ink3);letter-spacing:.05em;display:block}
+.stage.on .sno{color:var(--accent)}
+.stage .snm{font-size:14.5px;font-weight:500;display:block;margin-top:2px}
+.stage .sst{font-size:11.5px;color:var(--ink3);display:flex;align-items:center;gap:6px;margin-top:4px}
+.stage .sst i{width:14px;height:14px;border-radius:50%;border:1px solid var(--hair);
+  display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-style:normal;flex:none}
+.stage.done .sst i{background:var(--ok);border-color:var(--ok);color:#fff}
+
+.jump{display:block;width:100%;text-align:left;font-size:13px;color:var(--ink2);
+  padding:7px 13px 7px 30px;border-radius:8px;transition:.15s;position:relative}
+.jump:hover{background:#F2EEFB;color:var(--ink)}
+.jump::before{content:"";position:absolute;left:16px;top:50%;transform:translateY(-50%);
+  width:4px;height:4px;border-radius:50%;background:var(--hair)}
+
+.sidefoot{margin-top:34px;padding-top:22px;border-top:1px solid var(--hair)}
+.sidefoot .sfn{font-size:12.5px;font-weight:500;margin-bottom:6px}
+.sidefoot .sfd{font-size:12px;color:var(--ink3);line-height:1.65}
+
+/* ═══ 右侧主区 ═══ */
+.main{flex:1;min-width:0;padding:56px 60px 100px}
+@media(max-width:1080px){.main{padding:32px 22px 70px}}
+
+/* ═══ Hero ═══ */
+.hero{margin-bottom:52px}
+.hero .eyebrow{font-size:11px;letter-spacing:.16em;color:var(--ink3);margin-bottom:20px;font-weight:500}
+.hero h1{font-size:48px;line-height:1.16;font-weight:600;letter-spacing:-.035em}
+.hero h1 em{font-style:normal;color:var(--rose)}
+.hero .hteach{font-size:17px;color:var(--ink2);margin-top:20px;line-height:1.75;max-width:34em}
+.hchips{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.hchips span{font-size:13px;color:var(--ink2);background:var(--paper);border:1px solid var(--hair);
+  border-radius:100px;padding:7px 16px;display:flex;align-items:center;gap:8px}
+.hchips span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent-l)}
+
+/* ═══ 区块 ═══ */
+.sec{margin-bottom:52px;scroll-margin-top:30px}
+.sech{margin-bottom:20px}
+.sech h2{font-size:23px;font-weight:600;letter-spacing:-.02em;margin-bottom:8px}
+.sech .sd{font-size:14px;color:var(--ink2);max-width:44em;line-height:1.75}
+
+.card{background:var(--paper);border:1px solid var(--hair);border-radius:var(--r);
+  padding:32px;margin-bottom:18px}
+.card.flush{padding:0;overflow:hidden}
+.cardhead{padding:28px 32px 0}
+.cardbody{padding:0 32px 32px}
+
+/* 阶段卡 */
+.shead{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
+.shead .sl{flex:1;min-width:280px}
+.shead .sr{flex:none;width:210px}
+@media(max-width:760px){.shead .sr{width:100%}}
+.sno{font-size:11.5px;color:var(--accent);letter-spacing:.1em;font-weight:500}
+.stitle{font-size:28px;font-weight:600;letter-spacing:-.025em;margin:6px 0 10px}
+.sgoal{font-size:15px;color:var(--ink2);line-height:1.7}
+.books{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.books span{font-size:12.5px;color:var(--ink2);background:#f4f2ee;border-radius:100px;padding:4px 12px}
+.books em{font-style:normal;color:var(--ink3);font-size:11.5px}
+
+/* 彩彩做什么 */
+.coach{background:var(--accent-s);border-radius:var(--r);padding:26px 28px;margin-top:24px}
+.coach .ch{font-size:12px;color:var(--accent);letter-spacing:.08em;font-weight:600;margin-bottom:14px}
+.coach ul{list-style:none}
+.coach li{font-size:14.5px;color:#5a3a30;padding:6px 0 6px 24px;position:relative;line-height:1.7}
+.coach li::before{content:"";position:absolute;left:5px;top:15px;width:6px;height:6px;
+  border-radius:50%;background:var(--accent-l)}
+
+/* 问题组 */
+.grp{padding:26px 0;border-top:1px solid var(--hair2)}
+.grp:first-child{border-top:none;padding-top:0}
+.grp .gh{font-size:17px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;
+  justify-content:space-between;gap:16px}
+.grp .gh>span:first-child{display:flex;align-items:center;gap:10px}
+.grp .gh>span:first-child::before{content:"";width:4px;height:17px;border-radius:2px;
+  background:var(--accent);flex:none}
+.grp .gf{font-size:13px;color:var(--ink3);margin-bottom:18px;line-height:1.6;padding-left:14px}
+.q{padding:20px 22px;margin:14px 0;background:var(--paper);border:1px solid var(--hair);
+  border-radius:16px;transition:box-shadow .2s,border-color .2s}
+.q:hover{box-shadow:0 8px 24px rgba(61,42,115,.07);border-color:#E0D8F2}
+.q:first-of-type{margin-top:0}
+.q .qt{display:flex;gap:10px;align-items:flex-start;font-size:16px;font-weight:600;margin-bottom:7px;line-height:1.6}
+.q .qn{flex:none;min-width:23px;height:23px;border-radius:50%;background:var(--blue-s);
+  color:var(--blue);font-size:12px;font-weight:600;display:flex;align-items:center;
+  justify-content:center;margin-top:2px}
+.q .qh{font-size:13px;color:var(--ink3);margin-bottom:10px}
+.q .qs{font-size:12px;color:var(--accent);margin-bottom:12px;display:inline-block;
+  background:var(--accent-s);padding:3px 10px;border-radius:7px}
+.exwrap{margin:0 0 14px;background:linear-gradient(180deg,#FBFAFF,#F4EFFC);
+  border:1px solid #E6DFF6;border-left:3px solid var(--accent);border-radius:0 12px 12px 0;
+  padding:12px 16px 14px}
+.exlab{font-size:10.5px;letter-spacing:.16em;color:var(--accent);font-weight:600;
+  margin-bottom:5px;display:flex;align-items:center;gap:7px}
+.exlab::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,#DCD3F0,transparent)}
+.ex{font-size:13.5px;color:#5C4A87;line-height:1.85;white-space:pre-wrap}
+.q textarea{font-size:14px;background:#FBFAFE;min-height:96px}
+.q textarea:focus{background:#fff}
+
+.cpy.sk{background:var(--accent-s);border-color:transparent;color:var(--accent);font-weight:500}
+.cpy.sk:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.sknote{font-size:13px;color:var(--ink2);line-height:1.7;background:var(--accent-s);
+  border-radius:var(--r-s);padding:13px 16px;margin-bottom:18px}
+.sknote .skn{display:block;font-weight:500;color:var(--accent);margin-bottom:4px}
+
+.refs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.ref{border:1px solid var(--hair);border-radius:var(--r-s);padding:17px;background:#FBFAFE}
+.ref .rt{font-size:15px;font-weight:500;margin-bottom:6px}
+.ref .rw{font-size:13px;color:var(--ink2);line-height:1.65}
+.ref .rk{font-size:11.5px;color:var(--ink3);margin-top:7px}
+.upl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.file{display:flex;align-items:center;gap:12px;border:1px solid var(--hair);
+  border-radius:var(--r-s);padding:12px 15px;margin-bottom:8px;background:#FBFAFE}
+.file .fn{font-size:13.5px;font-weight:500;flex:1;min-width:0;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.file .fs{font-size:12px;color:var(--ink3);flex:none}
+.ti{margin-bottom:14px}
+.ti .tin{font-size:13px;font-weight:500;margin-bottom:6px}
+.ti textarea{font-size:13.5px;background:#FBFAFE;min-height:56px}
+
+.carry{border:1px solid var(--hair);border-radius:var(--r);padding:24px 26px;margin-top:18px;background:#fff}
+.carry .chh{font-size:12px;color:var(--ok);letter-spacing:.06em;font-weight:600;margin-bottom:8px}
+.carry .chd{font-size:13.5px;color:var(--ink2);line-height:1.7;margin-bottom:16px}
+.cy{background:var(--ok-s);border-radius:var(--r-s);padding:13px 16px;margin-bottom:9px}
+.cy.empty{background:#f4f2ee}
+.cy .cyl{font-size:12px;color:var(--ok);font-weight:600;margin-bottom:4px}
+.cy.empty .cyl{display:none}
+.cy .cyv{font-size:13px;color:#3d5c4c;line-height:1.7;white-space:pre-wrap}
+.cy.empty .cyv{color:var(--ink3)}
+
+/* 产出物 */
+.out{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.out{grid-template-columns:1fr}}
+.oi{border:1px solid var(--hair);border-radius:var(--r-s);padding:18px;background:#FBFAFE;transition:.18s}
+.oi:focus-within{background:#fff;border-color:var(--accent-l);box-shadow:0 0 0 3px rgba(61,42,115,.07)}
+.oi .ol{font-size:14.5px;font-weight:500;margin-bottom:4px}
+.oi .oh{font-size:12.5px;color:var(--ink3);margin-bottom:11px}
+.oi textarea{font-size:13.5px;background:#fff;min-height:60px}
+
+/* 填完之后 */
+.after{background:#f4f2ee;border-radius:var(--r);padding:30px 32px}
+.after .ah{font-size:20px;font-weight:600;letter-spacing:-.015em;margin-bottom:6px}
+.after .ad{font-size:13.5px;color:var(--ink2);margin-bottom:22px}
+.astep{display:flex;gap:16px;padding:16px 0;border-top:1px solid var(--hair)}
+.astep:first-of-type{border-top:none;padding-top:0}
+.astep .asn{width:28px;height:28px;border-radius:50%;background:var(--paper);color:var(--accent);
+  font-size:12.5px;font-weight:600;display:flex;align-items:center;justify-content:center;flex:none;
+  border:1px solid var(--hair);margin-top:1px}
+.astep .ast{font-size:15px;font-weight:500;margin-bottom:4px}
+.astep .asd{font-size:13.5px;color:var(--ink2);line-height:1.7}
+
+/* 路径卡 */
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.paths{grid-template-columns:1fr}}
+.path{border:1px solid var(--hair);border-radius:var(--r-s);padding:20px;cursor:pointer;
+  transition:.18s;background:#FBFAFE}
+.path:hover{border-color:var(--accent-l);background:#fff}
+.path.on{background:var(--accent-s);border-color:var(--accent-l)}
+.path .pn{font-size:15.5px;font-weight:500;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.path .pn::after{content:"＋";margin-left:auto;color:var(--ink3);font-size:15px;font-weight:400}
+.path.on .pn::after{content:"－";color:var(--accent)}
+.path .pd{font-size:13.5px;color:var(--ink2);line-height:1.7}
+.path .steps{margin-top:14px;padding-top:14px;border-top:1px dashed var(--hair);
+  font-size:13px;color:var(--ink2);display:none}
+.path.on .steps{display:block}
+.path .steps div{padding:4px 0}
+
+/* 通用 */
+.note{background:var(--accent-s);border-radius:var(--r-s);padding:16px 18px;font-size:13.5px;
+  color:#5a3a30;line-height:1.75}
+.note b{font-weight:600}
+.ok{background:var(--ok-s);border-radius:var(--r-s);padding:16px 18px;font-size:13.5px;
+  color:#2f5140;line-height:1.75}
+.ok b{font-weight:600}
+
+.prompt{border:1px solid var(--hair);border-radius:var(--r-s);padding:20px;margin-bottom:12px;background:#FBFAFE}
+.prompt .ph{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:11px}
+.prompt .pn{font-size:15px;font-weight:500;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.prompt .pt{font-size:13.5px;color:var(--ink2);line-height:1.75;white-space:pre-wrap}
+.prompt .pt+.pt{margin-top:9px}
+.cpy{padding:6px 14px;border-radius:9px;background:#fff;border:1px solid var(--hair);
+  font-size:13px;color:var(--ink2);white-space:nowrap;flex:none;transition:.16s}
+.cpy:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.cpy.done{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn{padding:11px 22px;border-radius:10px;background:var(--ink);color:#fff;font-size:14px;
+  font-weight:500;transition:.18s}
+.btn:hover{opacity:.86}
+.btn.a{background:var(--accent)}
+.btn.a:hover{background:#2E1E5B}
+.btn.g{background:#fff;color:var(--ink);border:1px solid var(--hair)}
+.btn.g:hover{border-color:var(--accent-l);color:var(--accent)}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+
+.steps5{display:flex;flex-direction:column;gap:11px}
+.s5{display:flex;gap:15px;border:1px solid var(--hair);border-radius:var(--r-s);padding:20px;background:#FBFAFE}
+.s5 .s5n{width:29px;height:29px;border-radius:9px;background:var(--accent-s);color:var(--accent);
+  font-size:12.5px;font-weight:600;display:flex;align-items:center;justify-content:center;flex:none}
+.s5 .s5t{font-size:15px;font-weight:500;margin-bottom:5px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.s5 .s5d{font-size:13.5px;color:var(--ink2);line-height:1.7}
+.s5 .s5o{font-size:12.5px;color:var(--ok);margin-top:8px}
+
+.diag{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.dc{background:var(--ok-s);border-radius:var(--r-s);padding:19px}
+.dc .dn{font-size:14.5px;font-weight:500;margin-bottom:7px;color:var(--ok)}
+.dc .db{font-size:13px;color:#3d5c4c;line-height:1.7}
+
+.kb{display:flex;gap:11px;padding:12px 0;border-bottom:1px solid var(--hair2)}
+.kb:last-child{border:none;padding-bottom:0}
+.kb .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-l);flex:none;margin-top:9px}
+.kb .kn{font-size:14px;font-weight:500}
+.kb .kd{font-size:12.5px;color:var(--ink3);line-height:1.65}
+
+.preview{background:#1a1917;color:#e8e5df;border-radius:var(--r-s);padding:20px;font-size:12.5px;
+  line-height:1.8;max-height:480px;overflow:auto;white-space:pre-wrap;font-family:ui-monospace,Menlo,monospace}
+
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(90px);
+  background:var(--ink);color:#fff;padding:13px 26px;border-radius:12px;font-size:14px;
+  opacity:0;transition:.3s cubic-bezier(.2,.8,.3,1);pointer-events:none;z-index:99}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.foot{text-align:center;font-size:12.5px;color:var(--ink3);padding:40px 0 0;border-top:1px solid var(--hair);line-height:1.9}
+.foot b{color:var(--ink2);font-weight:500}
+
+/* ═══ 模式切换 ═══ */
+.modesw{display:flex;gap:5px;background:#efedE7;border-radius:10px;padding:4px;margin-bottom:24px}
+.modesw button{flex:1;padding:8px 0;font-size:12.5px;border-radius:8px;color:var(--ink2);transition:.18s}
+.modesw button.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(26,25,23,.08);font-weight:500}
+
+/* ═══ 阶段报告 ═══ */
+.rep{border:1px solid var(--hair);border-radius:var(--r);background:var(--paper);padding:30px 32px;margin-bottom:18px}
+.rep .rh{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:7px}
+.rep .rtitle{font-size:21px;font-weight:600;letter-spacing:-.02em}
+.rep .rdesc{font-size:13.5px;color:var(--ink2);line-height:1.72;margin-bottom:20px}
+.rep textarea{min-height:360px;font-size:13.5px;background:#FBFAFE;line-height:1.85}
+.rep.locked textarea{background:#f7f6f1;color:#6d6a63}
+.rep .rfoot{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.lock{font-size:11.5px;padding:4px 11px;border-radius:100px;background:#f0eee8;color:var(--ink3);font-weight:500;flex:none}
+.lock.on{background:var(--ok-s);color:var(--ok)}
+.lock.wait{background:var(--accent-s);color:var(--accent)}
+.gate{font-size:13px;color:#7a4030;background:var(--accent-s);border-radius:var(--r-s);padding:13px 16px;margin-bottom:18px;line-height:1.72}
+.duo{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;margin-top:16px}
+@media(max-width:980px){.duo{grid-template-columns:1fr}}
+.duo .dd{border:1px solid var(--hair);border-radius:var(--r-s);padding:14px;background:#FBFAFE}
+.duo .dd .dl{font-size:12.5px;font-weight:600;color:var(--ink2);margin-bottom:9px}
+.duo .dd.ai .dl{color:var(--accent)}
+.duo .dd.mine .dl{color:#8a6a25}
+.duo .dd.final .dl{color:var(--ok)}
+.duo textarea{min-height:200px;font-size:13px;background:#fff}
+.imp{display:none}
+.hidden{display:none!important}
+.navprog{font-size:12px;color:var(--ink3);margin:-6px 0 14px;line-height:1.6}
+.navprog b{color:var(--accent);font-weight:600}
+
+/* ═══ 成交 SOP ═══ */
+.sopTabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+.sopTabs button{font-size:13px;padding:8px 15px;border-radius:999px;border:1px solid var(--hair);
+  color:var(--ink2);background:#fff;transition:.16s}
+.sopTabs button:hover{border-color:var(--accent-l)}
+.sopTabs button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.sopPanes .pane{display:none}
+.sopPanes .pane.on{display:block}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:980px){.flow{grid-template-columns:1fr 1fr}}
+.fnode{background:#fff;border:1px solid var(--hair);border-radius:var(--r);padding:18px 16px}
+.fnode .ft{font-size:11px;letter-spacing:.1em;color:var(--ink3)}
+.fnode .fn{font-size:15.5px;font-weight:600;margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fnode .fg{font-size:10.5px;padding:2px 8px;border-radius:999px;background:var(--accent-s);color:var(--accent)}
+.fnode .fd{font-size:12.5px;color:var(--ink2);line-height:1.75;margin-top:10px}
+.fnode .fm{font-size:12px;color:var(--rose);margin-top:12px;padding-top:10px;border-top:1px dashed var(--hair)}
+.fnode .fk{font-size:11.5px;color:var(--ink3);margin-top:6px;line-height:1.65}
+.callout{background:var(--accent-s);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;
+  padding:14px 18px;font-size:13.5px;color:var(--ink2);margin-top:18px;line-height:1.8}
+.callout b{color:var(--accent);font-weight:600}
+.rtable{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--hair);
+  border-radius:16px;overflow:hidden;font-size:13px}
+.rtable th{text-align:left;font-weight:500;font-size:11.5px;letter-spacing:.08em;color:var(--ink3);
+  background:#FAF8FE;padding:12px 16px;border-bottom:1px solid var(--hair)}
+.rtable td{padding:14px 16px;border-bottom:1px solid var(--hair2);vertical-align:top;line-height:1.7;color:var(--ink2)}
+.rtable tr:last-child td{border-bottom:none}
+.rtable tr.on td{background:var(--rose-s)}
+.gchip{display:inline-flex;align-items:center;font-size:13px;padding:8px 15px;border-radius:999px;
+  border:1px solid var(--hair);background:#fff;color:var(--ink2);transition:.16s;margin:0 6px 6px 0}
+.gchip:hover{border-color:var(--rose)}
+.gchip.on{border-color:var(--rose);background:var(--rose-s);color:var(--rose)}
+.tl{position:relative;padding-left:28px}
+.tl::before{content:"";position:absolute;left:7px;top:9px;bottom:9px;width:1px;background:var(--hair)}
+.tli{position:relative;margin-bottom:20px}
+.tli:last-child{margin-bottom:0}
+.tli::before{content:"";position:absolute;left:-25px;top:7px;width:9px;height:9px;border-radius:50%;
+  background:#fff;border:2px solid var(--accent)}
+.tli .td{font-size:11.5px;letter-spacing:.08em;color:var(--accent)}
+.tli .tw{font-size:14px;font-weight:500;margin-top:3px}
+.tli .tn{font-size:12.5px;color:var(--ink3);margin-top:2px;line-height:1.6}
+.spinGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:980px){.spinGrid{grid-template-columns:1fr}}
+.spinCard{background:#fff;border:1px solid var(--hair);border-radius:16px;padding:16px 18px}
+.spinCard .sn{font-size:12px;color:var(--rose);letter-spacing:.08em}
+.spinCard .sq{font-size:13.5px;font-weight:500;margin-top:8px;line-height:1.75}
+.spinCard .sh{font-size:11.5px;color:var(--ink3);margin-top:8px;line-height:1.6}
+.chkList{display:flex;flex-direction:column;gap:9px}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink2);
+  background:#fff;border:1px solid var(--hair);border-radius:12px;padding:11px 14px;cursor:pointer;line-height:1.65}
+.chk input{width:15px;height:15px;min-width:15px;margin-top:4px;accent-color:var(--accent);flex:none}
+.chk.on{border-color:var(--accent-l);background:var(--accent-s)}
+.sopItem{background:#fff;border:1px solid var(--hair);border-radius:14px;padding:15px 18px;margin-bottom:11px}
+.sopItem .sl{font-size:12.5px;font-weight:500;margin-bottom:9px;color:var(--ink)}
+.sopItem .stx{font-size:13px;color:var(--ink2);line-height:1.85}
+.sopSub{font-size:11.5px;letter-spacing:.08em;color:var(--ink3);margin:26px 0 12px}
+.goalRow{display:flex;flex-wrap:wrap;gap:10px}
+.goalItem{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink2);
+  background:#fff;border:1px solid var(--hair);border-radius:12px;padding:9px 14px}
+.goalItem input{width:58px;padding:6px 8px;text-align:center;font-size:13px;border-radius:8px}
+.goalItem input::-webkit-outer-spin-button,.goalItem input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+</style>
+</head>
+<body>
+<noscript><div style="background:#B03570;color:#fff;padding:14px 20px;font-size:14px;text-align:center;line-height:1.6">当前预览不执行 JavaScript，所以题目和导航不会加载。请把文件下载到电脑，用 Chrome / Edge 双击打开。</div></noscript>
+<div class="shell">
+  <!-- ═══ 左侧导航 ═══ -->
+  <aside class="side">
+    <div class="brand">
+      <div class="bn">AI 阅读变现<br>商业私教陪跑</div>
+      <div class="bs">AI READING MONETIZATION</div>
+      <div class="bt">擅长陪跑学员把商业书变成产品和收入</div>
+    </div>
+
+    <div class="modesw">
+      <button data-mode="student">学员端</button>
+      <button data-mode="coach">导师端</button>
+    </div>
+
+    <div class="navl">我的三段路</div>
+    <div class="navprog" id="navProg"></div>
+    <div id="navStages">
+      <button class="stage on" data-i="0"><span class="sno">第 1 段</span><span class="snm">个人商业资产盘点</span><span class="sst"><i>0</i>0 / 21 题</span></button>
+      <button class="stage" data-i="1"><span class="sno">第 2 段</span><span class="snm">定位与产品搭建</span><span class="sst"><i>0</i>0 / 24 题</span></button>
+      <button class="stage" data-i="2"><span class="sno">第 3 段</span><span class="snm">内容与成交实战</span><span class="sst"><i>0</i>0 / 24 题</span></button>
+    </div>
+    <div id="navJumps"></div>
+
+    <div class="sidefoot">
+      <div class="sfn">卡住了随时找我</div>
+      <div class="sfd">把你的答案发给我，我给你诊断。这不是作业，是我陪你走的过程。</div>
+      <div id="coachTools" class="hidden" style="margin-top:16px">
+        <button class="btn g" id="importBtn" style="width:100%;font-size:13px;padding:9px 0">导入学员档案</button>
+        <input type="file" id="importFile" accept=".json,application/json" class="imp">
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══ 右侧主区 ═══ -->
+  <main class="main">
+    <div class="hero">
+      <div class="eyebrow">你的工作台</div>
+      <h1>把读过的东西<br>变成<em>能卖的东西</em></h1>
+      <p class="hteach">每一段我陪你走：我问你答，我拆你的答案，你按诊断改。三个月后你手里有一份能发出去的产品方案。</p>
+      <div class="hchips" id="hchips"></div>
+    </div>
+
+    <!-- 阶段一 -->
+    <section class="sec" id="sec-stage">
+      <div class="sech">
+        <div class="sk">STAGE 01</div>
+        <h2>个人商业资产盘点</h2>
+        <div class="sd">先把你有的一切盘清楚。这一段结束时，你会得到一个最有价值的能力、三个可变现方向，和一个高价值定位。</div>
+      </div>
+    </section>
+
+    <!-- 引导问题 -->
+    <section class="sec" id="sec-questions">
+      <div class="sech">
+        <h2 id="qh">引导问题</h2>
+        <div class="sd">每一题都对应我书里的一个方法。写不出来的地方，就是你的卡点。写完一组，点右上角「复制这一组」发给我。</div>
+      </div>
+      <div class="card flush"><div class="cardbody" style="padding-top:26px" id="qBox"></div></div>
+    </section>
+
+    <!-- 产出物 -->
+    <section class="sec" id="sec-output">
+      <div class="sech">
+        <h2>这一段的产出物</h2>
+        <div class="sd">走完这一段，你手里要有这些。没填满不算走过这一关。</div>
+      </div>
+      <div class="out" id="outForm"></div>
+    </section>
+
+    <!-- 阶段报告（导师端） -->
+    <section class="sec hidden" id="sec-report"></section>
+
+    <!-- 填完之后 -->
+    <section class="sec" id="sec-after">
+      <div class="after" id="afterBox"></div>
+    </section>
+
+    <!-- 知识库（阶段一） -->
+    <section class="sec hidden" id="sec-kb"></section>
+
+    <!-- 创作工具包（阶段三） -->
+    <section class="sec hidden" id="sec-creator"></section>
+
+    <!-- 成交 SOP（阶段三 · 导师端） -->
+    <section class="sec hidden" id="sec-sop"></section>
+
+    <!-- 彩彩会怎么诊断 -->
+    <!-- 参考书 -->
+    <section class="sec" id="sec-refs"></section>
+
+    <!-- 选题规划 -->
+    <section class="sec" id="sec-topic"></section>
+
+    <section class="sec" id="sec-diag">
+      <div class="sech">
+        <h2>你把答案发给我，我会怎么拆</h2>
+        <div class="sd">先给你看我的方法，你才知道自己填的东西会被怎么处理——不会石沉大海。</div>
+      </div>
+      <div class="diag" id="toolBox"></div>
+    </section>
+
+    <!-- 导出 -->
+    <section class="sec" id="sec-export">
+      <div class="sech">
+        <h2>导出给彩彩的档案</h2>
+        <div class="sd">一份完整的 Markdown 文档——你写的每一个问题、每一条产出，全在里面。</div>
+      </div>
+      <div class="card">
+        <div class="btnrow" style="margin-top:0">
+          <button class="btn a" id="dlMd">下载 Markdown 文档</button>
+          <button class="btn g" id="copyMd">复制全文</button>
+          <button class="btn g" id="previewBtn">预览</button>
+          <button class="btn g" id="aiAll">把这一段交给 AI</button>
+          <button class="btn g" id="dlJson">导出学员档案（JSON）</button>
+        </div>
+        <div id="previewBox" class="hidden" style="margin-top:18px"></div>
+      </div>
+    </section>
+
+    <div class="foot">
+      骨架来自彩彩 ima 知识库真实资产 ·《「找卖点」1V1定位诊断》/《手册 Day 8 痛点提炼》军师三问 /《手册 Day 12-13 商业画布》/《彩彩AI阅读变现指南》/ 私教海报
+      <br><b>数据存在你自己的浏览器里，不上传任何人。</b>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ==== core.js ==== */
+// AI阅读变现 · 商业私教陪跑工作台 —— 核心数据
+// 全部来自海报原文 + 彩彩 ima 知识库真实资产
+//
+// 【重要区分】
+//   读书会（99元）= 学员自己选书、自己读、按五阶段走
+//   私教（9980元）= 彩彩带出结果，每阶段只读该读的那几章
+//   书单库是彩彩的弹药库，不是学员的作业清单
+//
+// 【海报原文要点】
+//   原价 19800，前 10 名内部体验价 9980
+//   权益一 个人商业资产盘点：彩彩本人一对一深访，把经历、能力、案例梳理成产品化素材，沉淀专属 SOP 知识库
+//   权益二 定位与产品搭建：0-1 规划主攻读书方向，跑通引流到高客单的变现路径
+//   权益三 内容与成交实战：定制内容方案，私域承接 / 私聊沟通 / 用户反馈全部跑通
+//   权益四 经验提炼与 Skill 沉淀：手把手带用 AI 工具，Skill 沉淀，效率翻倍
+//   权益五 专属 AI 商业助教：彩彩方法库 + 她的知识库 + 她的 Skill 组合成一个懂她的 AI 助教
+//   陪跑方式：1V1 深度诊断 / 每周执行反馈 / 阶段复盘
+//   陪跑时间：3 个月陪跑 + 3 个月独立操盘
+//   限时福利（前 10 位）：AI 阅读变现提示词库 + 个人商业知识库搭建模板
+
+const POSTER = {
+  title: "AI 阅读变现 商业私教陪跑",
+  en: "AI READING MONETIZATION",
+  teacher: "彩彩",
+  teacherLines: [
+    "AI+读书变现实战派玩家",
+    "阅读产品化体系搭建者，从 0 到 1 跑通六位数闭环",
+    "擅长陪跑学员把商业书变成产品和收入"
+  ],
+  original: 19800,
+  price: 9980,
+  quota: "仅限本期前 10 位",
+  suitable: [
+    "有读书习惯，但不知道怎么变现的人",
+    "想用 AI 提升内容生产效率的人",
+    "有知识积累，但没有产品化路径的人",
+    "有流量无转化，缺变现思路的创作者",
+    "想跑通知识付费，但不懂设计课程的人"
+  ],
+  unsuitable: [
+    "渴望一夜暴富，不愿长期积累的人",
+    "只想躺赢，缺乏执行力的人",
+    "只看重技巧，忽视价值沉淀的人"
+  ],
+  methods: ["1V1 深度诊断", "每周执行反馈", "阶段复盘"],
+  timeline: ["3 个月陪跑", "3 个月独立操盘"],
+  bonus: ["AI 阅读变现提示词库", "个人商业知识库搭建模板"]
+};
+
+const RIGHTS = {
+  r1: {
+    no:1, name:"个人商业资产盘点",
+    desc:"彩彩本人一对一深访，帮你把经历、能力、案例梳理成产品化素材，沉淀专属 SOP 知识库。",
+    stage:"asset", stageIdx:0, phase:"第 1-3 月",
+    todo:["21 道深访问题，4 组：经历资产 / 能力天赋 / 案例素材 / 怎么沉淀",
+      "1V1 深度诊断（每周一次），用军师三问拆你的答案",
+      "产出经历资产表、天赋信号清单、3 个可复用案例",
+      "搭建你自己的专属 SOP 知识库（四层结构 + 先放 20 条）"],
+    check:"你手里有一份经历资产表，且知识库已经装好前 20 条、能被 AI 搜到你的定位",
+    book:"《定位》——先盘点你实际占过什么位，才谈占哪个词"
+  },
+  r2: {
+    no:2, name:"定位与产品搭建",
+    desc:"从 0-1 带你规划出一个主攻的读书方向，跑通引流到高客单的变现路径。",
+    stage:"position", stageIdx:1, phase:"第 2-4 月",
+    todo:["24 道题，4 组：定位 / 产品形态 / 命名购买理由 / 变现路径",
+      "定下你要占的那个词，写出一句话定位",
+      "给产品起名、定标语和符号方向，写出第一版购买理由",
+      "设计好引流品 → 主力品 → 高客单的定价结构"],
+    check:"你手里有一句话定位、一个产品名、一版能发出去的文案、一条完整的变现路径",
+    book:"《定位》《超级符号》《真需求》《上瘾》——四本拼起来才是一个能卖的产品"
+  },
+  r3: {
+    no:3, name:"内容与成交实战",
+    desc:"定制内容方案，把私域承接、私聊沟通、用户反馈全部跑通。",
+    stage:"content", stageIdx:2, phase:"第 4-6 月",
+    todo:["24 道题，4 组：内容方案 / 私域承接 / 私聊成交 / 反馈闭环",
+      "定制你的内容方案：发什么、发给谁、在哪发、多久一条",
+      "设计私域承接路径：从哪来 → 怎么养熟 → 怎么转化",
+      "写私聊成交话术 + 建用户反馈闭环",
+      "用创作工具包把内容做出来（7 个 skill）"],
+    check:"你手里有内容方案、一条产品故事文案、一段成交话术、一条跑通的私域路径",
+    book:"《影响力》《故事经济学》《疯传》《上瘾》——内容、成交、反馈是一个闭环"
+  },
+  r4: {
+    no:4, name:"经验提炼与 Skill 沉淀",
+    desc:"手把手带你运用 AI 工具，Skill 沉淀，效率翻倍。",
+    stage:"through", stageIdx:-1, phase:"贯穿全程",
+    todo:["每周共创时你用 AI 完成自己那一周的产出，不是听彩彩讲工具怎么点",
+      "每次 1V1 都从 AI 的初稿开始改：AI 出方向，你填经历，彩彩审",
+      "每周把可复用的提示词和流程沉淀成自己的 Skill",
+      "把沉淀的经验存进你自己的知识库"],
+    check:"3 个月内攒下至少 3 个属于自己的 Skill（提示词 / 流程 / 检查清单）",
+    book:"每周三问：你有几个能重复用的提示词？这周用 AI 做成了什么？有没有哪步每次都要重新教 AI？"
+  },
+  r5: {
+    no:5, name:"专属 AI 商业助教",
+    desc:"把彩彩方法库、你的知识库、你的 Skill 组合起来，搭成一个懂你的 AI 助教。",
+    stage:"through", stageIdx:-1, phase:"贯穿全程",
+    todo:["你的知识库接上 ima，AI 调的是你攒的材料，不是全网通用答案",
+      "彩彩方法库 + 你的知识库 + 你的 Skill 三样合起来",
+      "遇到卡点先问你的 AI 助教，它知道你的定位、产品和案例",
+      "5 个测试问题验证：它给的是通用答案还是你的答案"],
+    check:"一个能回答「我的产品该怎么做」「我的用户是谁」「我的卡点在哪」的 AI 助教",
+    book:"检验标准很简单：问它「我是谁」，如果答的是通用答案，就是库还没装对"
+  }
+};
+
+const TIMELINE = {
+  phases: [
+    { id:"coach", name:"陪跑期", length:"第 1-3 月（12 周）",
+      desc:"彩彩在前面：1V1 诊断、每周反馈、阶段复盘",
+      items:[
+        "第 1-3 月｜资产盘点 + 定位 + 产品（每周 1V1 深度诊断）",
+        "第 4-6 月｜内容 + 成交 + 私域跑通（每周执行反馈）",
+        "第 1-6 月｜每周一次阶段复盘，对照产出物清单验收"
+      ] },
+    { id:"solo", name:"独立操盘期", length:"第 4-6 月（12 周）",
+      desc:"她自己跑，彩彩只在复盘时看",
+      items:[
+        "自己排期、自己执行，彩彩不催不盯",
+        "每两周交一次产出，彩彩只做验收和纠偏",
+        "目标：跑通第一笔真实成交"
+      ] }
+  ]
+};
+
+const STAGES = [
+  {
+    id:"asset", no:1, name:"个人商业资产盘点", right:"权益一",
+    months:"第 1-3 月",
+    goal:"把散在生活里的经历、能力、案例，变成能反复调用的资产",
+    books:["定位"],
+    bookWhy:"《定位》讲的是「在用户心智里占一个词」。资产盘点是占位之前的地基——先有你有什么，才谈占哪个词。",
+    coachDo:[
+      "彩彩亲自深访，逐条问你这 21 道题——不是让你自己填完就算",
+      "把你的答案和你讲过的真实经历对照，挑出你身上别人替代不了的那部分",
+      "用军师三问拆：戈汀问目标用户够不够窄、费曼问真痛点还是伪痛点、卡尼曼把痛点改写成一句你看到会点头的话",
+      "陪你把资产装进你的专属知识库，教会你怎么自己往里加"
+    ],
+    after:[
+      { t:"① 你复制这一组，发给彩彩", d:"点问题组右上角的「复制这一组」，里面已经带上你的答案，直接粘到微信发给彩彩就行。" },
+      { t:"② 彩彩给你一份诊断", d:"她会回你三样东西：1-2 个能落地的方向、你的目标用户窄到什么程度、一句戳心的话。" },
+      { t:"③ 你按诊断改产出物", d:"方向定了，就把「产品方向」那格填上。没定的题不用硬填，等诊断回来再补。" }
+    ],
+    deliverables:[
+      { k:"story", label:"我的经历资产表", hint:"过去 10 件别人找你帮忙的事，每件写清：什么事、你怎么处理、对方什么反应" },
+      { k:"talent", label:"天赋信号清单", hint:"哪件你轻松但别人觉得难，哪件你做完对方说「如果是我绝对搞不住」" },
+      { k:"cases", label:"可复用的案例素材", hint:"你做成的、被验证过的 3 件事，每件写成 STAR" },
+      { k:"sop", label:"专属 SOP 知识库规划", hint:"这些资产要沉淀成什么形式：知识库 / 清单 / 手册 / 流程" },
+      { k:"kb", label:"我的知识库搭建任务", hint:"库名、分几层、先放哪 20 条" }
+    ],
+    groups:[
+      { g:"A 组｜经历资产", from:"《定位》的「重新定位竞争对手」——先盘点你实际占过什么位",
+        qs:[
+          { q:"过去 3 年里，有多少人主动找过你帮忙？分别是什么事？", hint:"列出具体的事，别写「朋友、家人」这种", from:"主动找你 = 你已经占过的位", ex:"朋友和前同事加起来大概七八个。有让我帮忙改简历的，有问我小红书怎么起号的，还有个朋友每次给孩子选绘本都来问我。最近一个是前同事，让我帮她看课程大纲哪里有问题。" },
+          { q:"这些人后来怎么样了？他们满意吗？怎么表现的？", hint:"客户的反应就是你价值的证据", from:"结果比过程更能定价", ex:"改简历那个朋友后来拿到两个 offer，特意请我吃了顿饭。问小红书的前同事做了三个月，粉丝涨到两千多，现在还常给我发她的笔记数据。挑绘本那位更直接，每次买完都拍照片说孩子爱看。" },
+          { q:"有没有一件事，你做起来是「顺手」的，但别人专门找你做？", hint:"顺手 = 你的默认动作 = 天赋信号", from:"《定位》：领导者做自己擅长的事", ex:"有，把厚书拆成几页能看懂的笔记。做运营那几年每周要给团队做读书分享，顺手练出来的。现在朋友读到难啃的书，第一反应就是扔给我。" },
+          { q:"有没有一次别人说「这个我肯定不行，只有你能做」？", hint:"原话记下来，别改写", from:"他人的评价比自我评价准确", ex:"有。去年一个朋友想给孩子做阅读计划，试了好几个 App 都不行，最后她说「这事儿只有你能帮我弄，我真不会挑也不会排」。原话大概就是这样，我当时还挺意外的。" },
+          { q:"你这几年换过几次方向？每次为什么换？", hint:"换的原因，往往暴露你真正在意什么", from:"《定位》：重新定位自己", ex:"换过两次。先做了 4 年新媒体运营，后来转去教育公司做课程运营，又干了两年多。两次的原因其实一样：不想只做执行，想离内容和用户近一点。" },
+          { q:"如果现在有人问你「你是做什么的」，你会怎么答？", hint:"照实说，别美化。这是你现在的定位", from:"定位是用户记住的，不是你想的", ex:"我一般说「以前做运营，现在在研究怎么把读书做成产品」。说实话有点心虚，因为还没赚到什么钱。但我不想再说自己是运营了，那个身份我不想待了。" }
+        ] },
+      { g:"B 组｜能力与天赋", from:"《定位》讲定位要「可被识别」——先认出你身上别人认不出的东西",
+        qs:[
+          { q:"哪件事你做起来又快又轻松，但别人觉得很难？", hint:"轻松 + 别人觉得难 = 天赋", from:"天赋 = 难度错位", ex:"快速读完一本书再讲清楚它讲什么。我一晚上能翻完一本商业书，第二天就能跟朋友复述个大概。她们觉得很神，但我真觉得就是顺手的事。" },
+          { q:"别人常来问你哪类问题？", hint:"被反复问的 = 现成的需求", from:"重复出现的问题 = 真需求", ex:"最多两类：一类是怎么开始读书、读什么书，一类是怎么做账号起号。偶尔也有人问课程怎么设计，那是之前做课程运营留下的印象。" },
+          { q:"你做什么事的时候最不累？", hint:"不累的那件，才做得久", from:"三个月靠的是续航不是爆发", ex:"拆书写笔记的时候最不累，一坐三四个小时不觉得。还有跟朋友一对一聊她们的职业困惑，聊完我反而挺兴奋，不觉得消耗。" },
+          { q:"有什么事你一看就有判断，别人看不出来？", hint:"你的经验密度高的地方", from:"《定位》：做有认知壁垒的事", ex:"看知识付费产品。一门课我扫一眼大纲就知道水不水、能不能卖。之前做课程运营两年多，看过的课太多了，坑都在脑子里。" },
+          { q:"你的性格适合哪种活法：教别人、陪别人做、还是自己闷头做？", hint:"选你性格能撑三个月的那个", from:"定位要可持续，不是选最赚钱的", ex:"我应该是陪别人做那种。纯讲课我有点怵，怕自己不够权威；完全闷头做又受不了，我需要跟人互动。之前带实习生的那段日子，是我最舒服的状态。" },
+          { q:"有没有那种「你一做就停不下来」的事？", hint:"停不下来 = 兴趣 + 能力都在", from:"心流是天赋的信号", ex:"整理笔记和做知识卡片。有次为了整理《定位》的笔记，从晚上八点弄到凌晨一点，完全忘了时间。还有给人改稿子，改着改着就整篇重写了一遍。" }
+        ] },
+      { g:"C 组｜案例素材", from:"《定位》的品牌延伸——一个案例能撑起一个定位",
+        qs:[
+          { q:"你做成过的、最有成就感的一件事是什么？", hint:"越具体越好，能讲故事的那种", from:"案例是产品最好的说明书", ex:"在上一家公司从零做了个读书打卡社群，三个月做到 800 多人，续费率差不多 40%。那是我第一次完整跑通一个产品，钱不多，但证明了我能成事。" },
+          { q:"这件事的结果是什么？能拿数字就说数字", hint:"没有数字就用「谁、因为什么、变成了什么」", from:"《超级符号》：购买理由要有依据", ex:"三个月 800 多人，每人 69 块，收了 5 万多一点，续费率 40% 左右。最让我记到现在的不是钱，是有 20 多个人主动写了很长的感谢私信。" },
+          { q:"有没有帮别人做成过什么事？", hint:"帮别人做成的，最能证明你行", from:"教学案例比自述有力", ex:"帮一个想转行的幼师朋友改简历和面试话术，陪她磨了两周，最后她进了一家教育公司做运营，工资涨了快一倍。她到现在还经常找我聊天。" },
+          { q:"有没有失败过、但你现在能讲清楚为什么的事？", hint:"失败案例是你的判断力证明", from:"《定位》：重新定位竞争对手", ex:"前年自己做过一个 99 块的写作课，只卖出去 7 份。现在看很清楚：当时根本没有流量，课也做得太泛，什么人都想收。亏得不多，但教训很值钱。" },
+          { q:"你的经验里，有什么是「网上搜不到」的？", hint:"搜不到 = 只有你有 = 护城河", from:"《定位》：差异化", ex:"怎么陪一个不想读书的成年人把书读完。网上全是自律打卡那套，但真实情况是：大多数人卡在选错书、读太慢、读完不知道干嘛。这些只有真带过社群的人才知道。" }
+        ] },
+      { g:"D 组｜怎么沉淀成资产", from:"《定位》讲心智要「可识别」——资产要先变成别人能查得到的形式",
+        qs:[
+          { q:"这些经历和能力，你想怎么存下来？", hint:"可以是知识库、清单、手册、笔记、SOP", from:"形式决定能不能被反复调用", ex:"想做成一个知识库，分几层：一层放经历，一层放方法，一层放案例。再配一份清单，把我常用的流程写清楚，比如「拆一本书的完整流程」。" },
+          { q:"你希望 3 个月后，别人问 AI 你的事时，AI 答得出什么？", hint:"这就是你的知识库要装的东西", from:"《定位》：在心智里占一个词", ex:"希望它能答出：这个人做过 4 年运营、2 年教育，跑通过 800 人的读书社群，擅长把书拆成普通人能用的东西。别一问三不知，那这几个月就白干了。" },
+          { q:"你打算给自己的知识库起什么名字？分几层？", hint:"名字定调，层级定检索方式", from:"《超级符号》：名字是召唤", ex:"还没完全想好，可能叫「我的读书变现资产库」。层的话想分四层：经历、方法、案例、素材。名字我纠结好几天了，总觉得很土。" },
+          { q:"这周你打算先往库里放哪 20 条？", hint:"先放最有用的 20 条，不要一次上传 500 条", from:"《真需求》：先做最小可行版本", ex:"先放读书社群的完整复盘，大概能拆出七八条；再放做课程运营时攒的选品和排课经验，五六条；剩下放几篇我写得最好的读书笔记。" }
+        ] }
+    ],
+    paths:{
+      inner:{ name:"内找（从你自己出发）", desc:"你已经有东西了，问题是没人帮你拎出来。适合方向乱、不知道自己有什么的人。",
+        steps:["做完四组深访问题","把答案交给 AI 聚成资产清单","用草包族检验：她「知道了方向」就解决了吗","窄化目标用户，直到能写出一句文案"] },
+      outer:{ name:"外找（从市场需求出发）", desc:"你已经知道自己擅长什么，只是不确定有没有人买。适合已做出东西、卡在卖不动的人。",
+        steps:["做完四组深访问题","去「赚钱案例库」找 3 个已跑通的同类","对比：哪个方向是你能做、别人做不了的","先做最小版本，拿真实反馈再改"] }
+    }
+  },
+  {
+    id:"position", no:2, name:"定位与产品搭建", right:"权益二",
+    months:"第 2-4 月",
+    goal:"跑通从引流到高客单的变现路径",
+    books:["定位","超级符号就是超级创意","真需求","上瘾"],
+    bookWhy:"《定位》定方向，《超级符号》起名字和购买理由，《真需求》验证需求，《上瘾》设计使用路径。这四本拼起来才是一个能卖的产品。",
+    coachDo:[
+      "这 24 道题彩彩陪你答，不是让你自己啃四本书",
+      "彩彩拿她读过的一百多本商业书当素材库，帮你挑出该用的那几张卡",
+      "现场帮你改定位、改产品名、改文案——她改一句顶你自己改一周",
+      "帮你算清楚引流品到高客单怎么串，以及为什么是这个价"
+    ],
+    after:[
+      { t:"① 你复制这一组，发给彩彩", d:"同上一段。这次的答案里会带出你的一句话定位草稿和产品名想法。" },
+      { t:"② 彩彩现场帮你改", d:"她回你的是改好的版本，不是建议：改后的定位、产品名、购买理由、定价结构。" },
+      { t:"③ 你落地第一版文案", d:"拿到改好的版本，直接发出去试。有反馈了，回来加进这一阶段。" }
+    ],
+    deliverables:[
+      { k:"position", label:"一句话定位", hint:"我是__，帮__，解决__" },
+      { k:"word", label:"我要占的那个词", hint:"用户心里那个位置，别人占了吗" },
+      { k:"name", label:"产品名 + 标语 + 符号方向", hint:"0 秒让人知道你是做什么的" },
+      { k:"reason", label:"一句购买理由", hint:"不是功能描述，是她心里那个「我想要」" },
+      { k:"form", label:"产品形态与交付清单", hint:"用户买完具体拿到什么，从 A 点到 B 点" },
+      { k:"price", label:"定价结构与引流路径", hint:"引流品 → 主力品 → 高客单，一条线" }
+    ],
+    groups:[
+      { g:"A 组｜定位", from:"《定位》全书的底层问题：你在用户心智里占哪个词",
+        qs:[
+          { q:"用一句话说清：你是谁、帮谁、解决什么问题？", hint:"照《定位》的公式填：我是__，帮__，解决__", from:"定位三段式", ex:"我是一个做过运营、跑通过读书社群的人，帮想读书但读不下去的职场人，把读过的书变成能用的东西。写出来觉得有点长，但大概就是这个意思。" },
+          { q:"这句话，8 岁小孩能听懂吗？", hint:"听不懂就是还没成型，不是他笨", from:"费曼检验", ex:"我试着讲给上小学的侄女听，她听完问「所以你是教人读书的吗」。好像还行？但「把书变成能用的东西」这句她就没听懂，我还得再改。" },
+          { q:"如果把她换成你同行，这句话还成立吗？", hint:"不成立 = 没有差异化", from:"《定位》：重新定位竞争对手", ex:"不太成立。我认识几个做读书会的人，大多是自己爱读书就开了，没跑通过社群，也没做过运营。「跑通过」这三个字，好像就是我的差异。" },
+          { q:"这个方向上，已经有人在做了吗？他们占的是什么词？", hint:"有人占着，说明这个词有需求", from:"《定位》：跟随者与领导者", ex:"有，小红书上读书博主一抓一大把，占的是「书单」「自律」这类词，还有几个大 V 占着「读书会」。我抢不过，得找个小一点的口子。" },
+          { q:"你能占的词是什么？跟现在这个差多远？", hint:"《超级符号》：名字要能利用已有心智", from:"心智容量有限", ex:"我想占「读书变现」或者「把书读成产品」。跟「书单博主」差得挺远，跟我现在的成绩也差得远——我自己才刚赚到第一笔。但方向是这个方向。" },
+          { q:"你希望别人听到你的名字，脑子里第一个蹦出什么？", hint:"符号是那个蹦出来的东西", from:"《超级符号》", ex:"蹦出「跟着她读书，真能做出东西来」。我不需要别人觉得我有文化，我需要她觉得「这个人能带我把读过的书变成钱」。" }
+        ] },
+      { g:"B 组｜产品形态", from:"《真需求》讲需求真伪，《上瘾》讲产品怎么让人用下去",
+        qs:[
+          { q:"有谁真的为它付过钱？付了多少？", hint:"付过钱才算真需求，嘴上说好的不算", from:"《真需求》：真实与假设", ex:"之前那个读书社群，800 多人每人付过 69 块。后来零星接过几次一对一咨询，一次 299。严格说不算现在这个产品，但至少证明这条路有人愿意掏钱。" },
+          { q:"他们买了之后问了你什么？", hint:"这些问句就是你文案要回答的", from:"《超级符号》：盯顾客", ex:"问最多的是「下周读什么」「我读得太慢怎么办」。还有几个私下问我能不能帮她孩子做阅读计划。这些我当时都记下来了，回头看其实就是产品雏形。" },
+          { q:"他们问了什么、你答不上来？", hint:"答不上来的地方 = 产品的缺口", from:"《真需求》：需求的层次", ex:"有人问我「读完怎么赚钱」，我当时答不上来，只能说「先把书读好」。现在想，那就是我当时产品最大的缺口：只解决了读，没解决用和赚。" },
+          { q:"你的产品交付的是什么？是一份资料，还是一个「从 A 到 B」的过程？", hint:"过程型产品才撑得起高客单", from:"《上瘾》：触发—行动—酬赏—投入", ex:"想做过程。光给资料没用，我之前社群的资料包很多人下载了根本没打开。得陪她从选书走到做出一个自己的东西，哪怕只是一套能卖的读书笔记。" },
+          { q:"她在什么时刻最需要你？（触发点是什么）", hint:"触发点定准了，内容才投得准", from:"《上瘾》：触发", ex:"大概是买了书读两章就放弃的那个晚上。或者刷到同龄人做副业赚到钱、自己突然焦虑的那一刻。再就是年底复盘发现一年啥也没做成的时候。" },
+          { q:"你希望她多久之后能看到一次「啊我做到了」？", hint:"这个间隔就是你的最小交付周期", from:"《上瘾》：投入", ex:"两周比较合适。一周太短出不了东西，一个月太长人容易散。两周能读完一本书的核心章节，做出几张卡片或一篇笔记，够她发朋友圈显摆了。" }
+        ] },
+      { g:"C 组｜命名与购买理由", from:"《超级符号》：名字不是创意，是从已有心智里借",
+        qs:[
+          { q:"你的产品叫什么？三个候选。", hint:"要 0 秒被理解，不是自嗨", from:"《超级符号》：命名", ex:"想了三个：「读书变现营」「把书读成钱」「阅读产品化实验室」。第一个太像割韭菜，第二个太俗，第三个太绕口。还没定，头疼。" },
+          { q:"每个名字，圈子里的人能听懂吗？", hint:"不能听懂的 = 白起", from:"利用集体潜意识", ex:"「读书变现营」大家一听就懂，但懂的方向不对，会以为是理财课。「阅读产品化」我发给做运营的朋友看，她直接问「产品化是啥意思」。看来这个名字得毙掉。" },
+          { q:"先找购买理由，再找符号——你的购买理由是什么？", hint:"「如果是我绝对搞不定」的那个点", from:"先找购买理由", ex:"大概是：你读了很多书但一分钱没赚到，我帮你把读过的书变成能卖的东西。她们「如果是我绝对搞不定」的点，就是不知道读和卖怎么连起来，而我连起来过。" },
+          { q:"你的符号是什么？颜色、形状、一句话、一张图？", hint:"能让人一眼认出来的", from:"《超级符号》", ex:"还没想好。可能用一本打开的书变成阶梯的图形？颜色想暖一点，砖红或橙色。一句话的话，「读过的书，都该变成钱」——有点土，先放着。" },
+          { q:"消费者四角色：受众、购买者、体验者、传播者，分别是谁？", hint:"《超级符号》第 7 章，四个角色都要照顾到", from:"消费者四角色", ex:"受众是小红书上刷「读书变现」内容的人；购买者是想做副业但不知道从哪下手的职场人，28 到 40 岁居多；体验者就是她们本人；传播者是做出成果后愿意晒笔记的老学员。" },
+          { q:"你的 4P：产品、价格、渠道、促销，分别是什么？", hint:"《超级符号》第 8 章", from:"4P 策略", ex:"产品是读书变现陪跑营；价格从 99 的体验课到两千左右的正式营；渠道主要靠小红书加朋友圈；促销上前几期低价锁人，之后靠老学员转介绍给返利。" }
+        ] },
+      { g:"D 组｜变现路径", from:"《定位》讲占位，《上瘾》讲留人——引流到高客单是一条链，不是一个产品",
+        qs:[
+          { q:"你的引流品是什么？免费还是低价？", hint:"《定位》：书是她的窗外，引流品是那扇窗", from:"低价拉新", ex:"低价，9 块 9 的「7 天拆书体验营」。免费的我试过，来的根本不是真心想读的人，发消息都不回。收十块钱起码能筛掉伸手党。" },
+          { q:"引流品承诺什么结果？多快见效？", hint:"越快越好，但要说实话", from:"《真需求》", ex:"承诺 7 天拆完一本书的第一章，做出一张属于自己的知识卡片。7 天肯定能见效，因为卡片看得见。赚钱我不承诺，那是假话。" },
+          { q:"主力品是什么？价格多少？", hint:"《定位》：可被拒绝的定位才有价值", from:"定价结构", ex:"6 周的「读书变现实战营」，定价 1999 左右。每周读一章、交一次作业、我改一次稿，毕业标准是每个人做出一个自己的最小产品。" },
+          { q:"高客单那档是什么？多贵？贵在哪？", hint:"贵的部分必须是你不可替代的", from:"《定位》：聚焦", ex:"一对一陪跑，三个月，6980 或更高。贵在完全针对她一个人：帮她盘经历、定方向、逐篇改内容。交付很重，一年最多接 10 个。" },
+          { q:"这三档之间，用户是怎么被带过去的？", hint:"每一档都要有一个「升级理由」", from:"《上瘾》：触发", ex:"体验营里做出卡片的人，自然会想「整本书呢、做成产品呢」，就报实战营；实战营里做得好、需求更个性化的，我私下聊，合适的升一对一。每档都让她先尝到一点甜头。" },
+          { q:"如果只能留一档，你留哪档？为什么？", hint:"《定位》：做减法", from:"聚焦", ex:"留实战营。一对一太累起不了规模，引流品不挣钱。实战营是我最能复制、也最能出案例的一档，有案例才有一切。" }
+        ] }
+    ],
+    paths:{
+      inner:{ name:"内找（从你的经验出发）", desc:"你的产品应该长成你做过的事的样子，不是抄别人的形态。",
+        steps:["做完四组问题","找出「付过钱」的那部分——产品的地基","让 AI 把它变成一件能说清楚的东西","对照已跑通的案例，找出你还缺哪块"] },
+      outer:{ name:"外找（从已验证的需求出发）", desc:"你已经有东西了，现在要做的是把它做成能卖的形态。",
+        steps:["做完四组问题","去书单库找《真需求》《上瘾》《李想16讲》的方法","去商业情报库找 3 个同类产品的形态和定价","做「最小可行产品」：能卖出去的那一版"] }
+    }
+  },
+  {
+    id:"content", no:3, name:"内容与成交实战", right:"权益三",
+    months:"第 4-6 月",
+    goal:"把私域承接、私聊沟通、用户反馈全部跑通",
+    books:["影响力","故事经济学","疯传","上瘾"],
+    bookWhy:"《故事经济学》讲怎么让人记住你，《疯传》讲内容怎么被传出去，《影响力》讲说服的六个原理，《上瘾》讲私域怎么变成日常。内容、成交、反馈是一个闭环——不是三件事。",
+    coachDo:[
+      "这 24 道题彩彩陪你答，同时给你看 7 个创作工具包怎么用",
+      "拆你的真实案例：哪个能用、哪个不能用，为什么",
+      "帮你把产品故事写出来——你的素材她自己写不出来，只有你的经历能写",
+      "陪你改私聊话术，直到她听完不反感"
+    ],
+    after:[
+      { t:"① 你复制这一组 + 你的内容方案，发给彩彩", d:"这一段会带出你的私聊话术初稿和第一版文案。" },
+      { t:"② 彩彩用创作工具包帮你改", d:"她拿选题簇、四镜、升维这几个方法给你的稿子过一遍，告诉你哪句留哪句删。" },
+      { t:"③ 你发出去，收反馈，回填", d:"真实发出去才有意义。发完把反馈填进「用户反馈闭环」那格。" }
+    ],
+    deliverables:[
+      { k:"plan", label:"内容方案", hint:"发什么、发给谁、在哪发、多久一条" },
+      { k:"pillars", label:"内容支柱", hint:"长期发哪几类，各占多少" },
+      { k:"story", label:"一条产品故事文案", hint:"一个人、一个困境、一个转变" },
+      { k:"private", label:"私域承接路径", hint:"从哪来 → 进群/加好友 → 怎么被养熟 → 怎么转化" },
+      { k:"sales", label:"私聊成交话术", hint:"先答问题不报价，处理三个常见拒绝" },
+      { k:"feedback", label:"用户反馈闭环", hint:"怎么收反馈、怎么改、怎么让她看见自己变好了" }
+    ],
+    groups:[
+      { g:"A 组｜内容方案", from:"《故事经济学》：故事是让人记住你的唯一方式；《疯传》：内容要能被转发才有用",
+        skill:"topic", skillNote:"答完这一组，把你说的那段话（不用整理）交给「老树新芽选题簇」，它会给你 3 个可写的选题。不用你先想好选题。",
+        qs:[
+          { q:"你的内容发给谁看？她们现在在哪个平台？", hint:"平台决定形式，先定再写", from:"《疯传》STEPPS", ex:"发给想做副业、买过很多课但从没赚到钱的职场女性，28 到 40 岁。她们主要在小红书，少部分在公众号。我自己刷了三年小红书，太知道她们爱看什么。" },
+          { q:"你发过的数据最好的一条是什么？为什么好？", hint:"不是最好看，是数据最好的", from:"复盘已有素材", ex:"去年一条「我做运营 4 年，劝你别再乱买课了」，点赞 800 多，评论 200 多条。好在说了反话——别人都在推课，我劝人别买。好多人评论「终于有人说实话了」。" },
+          { q:"你打算长期发哪几类内容？各占多少？", hint:"《定位》：内容也要占位", from:"内容支柱", ex:"三类：一半发「读书怎么变成钱」的实操拆解，三成发我自己的踩坑和重启故事，两成发学员案例。故事类我最不敢发，但数据最好的偏偏是它。" },
+          { q:"你的产品故事是什么？一个困境、一个转变？", hint:"《故事经济学》的结构", from:"英雄之旅", ex:"我曾经攒了 200 多篇读书笔记、买课花了两万多，一分钱没赚到。直到做了那个 800 人社群，才第一次靠读书赚到钱。从「只会学」到「能卖出去」，这就是我的转变。" },
+          { q:"这个故事里最扎心的一句是什么？", hint:"扎心那句才留得住人", from:"损失厌恶", ex:"「我花了两万块买课，最后是用免费的方法赚到第一块钱的。」每次想到这句我都挺难受，但它最真实。" },
+          { q:"一条内容里，你只希望她记住一件事——是哪件？", hint:"《疯传》讲信息点越少越容易被传播", from:"砍到不能砍", ex:"记住「读书本身不赚钱，把书做成产品才赚钱」。别的忘了都行，这句必须记住。" }
+        ] },
+      { g:"B 组｜私域承接", from:"《上瘾》：私域不是群，是一段有节奏的关系",
+        skill:"mood", skillNote:"要蹭热点才用这一组：把那条爆款截图或链接交给「时代情绪探测器」，它会告诉你它火在哪、你能不能蹭。",
+        qs:[
+          { q:"你的第一批人从哪来？能持续来的是哪条路？", hint:"《疯传》找那个「让他非转不可」的理由", from:"找人", ex:"第一批从之前社群的老用户和朋友圈里捞，大概能捞出几十个。持续的得靠小红书，我计划每周发 4 篇，先跑三个月看哪类能稳定来人。" },
+          { q:"她加上你之后，第一句话你会说什么？", hint:"第一句话决定她会不会回你", from:"《影响力》互惠", ex:"「欢迎呀，先不推任何东西。你最近在读什么书，或者卡在哪了？」先聊起来。上来就甩海报那种，我自己收到都烦。" },
+          { q:"她需要多久能被你「养熟」？中间给什么？", hint:"《上瘾》的触发—行动—酬赏—投入", from:"养熟", ex:"估计两三周。中间给三样：一份我的拆书笔记模板、一次直播答疑、几个老学员的真实案例。让她先免费用上我的方法，尝到味道再说。" },
+          { q:"群里/私域里，你每周发什么？固定节奏是什么？", hint:"节奏比内容重要", from:"《上瘾》：固定触发", ex:"周一发本周共读章节，周三发一条我自己的拆解，周五晚答疑，周日晒学员成果。节奏固定比内容重要，这是我上次做社群最深刻的教训。" },
+          { q:"什么信号出现时，她就是在考虑买了？", hint:"《影响力》社会认同", from:"识别信号", ex:"开始问价格、问「适不适合我这种情况」、问下期什么时候开。还有个信号：她突然把你好多条内容连着点赞一遍，这种八成在做功课。" },
+          { q:"她不买，最常见的理由是什么？", hint:"这句就是你要解的结", from:"损失厌恶", ex:"「我怕我又坚持不下来」，这句我听了不下二十遍。再就是「等忙完这阵子」。说到底都是怕再花一笔冤枉钱，我自己以前就是这样。" }
+        ] },
+      { g:"C 组｜私聊沟通与成交", from:"《影响力》六大原理：《互惠》《承诺一致》《社会认同》《喜好》《权威》《稀缺》",
+        skill:"hammer", skillNote:"写成交话术前，先用「意义真空·故事小锤子」把她的真实经历变成一个有画面的故事——话术里最有杀伤力的不是道理，是故事。",
+        qs:[
+          { q:"她问价的时候，你第一句说什么？", hint:"先答问题，不报价", from:"《影响力》喜好", ex:"我先说：「价格等下告诉你，我想先搞清楚你适不适合。你现在每天能拿出多少时间读书？」把节奏拉回来，不然报完价就没下文了。" },
+          { q:"她犹豫时，你会给她看什么证据？", hint:"别人的结果 > 你的自述", from:"社会认同", ex:"给她看老学员实打实做的东西：谁做的知识卡片、谁的小产品卖了多少份，不是好评截图。再不行就让她先进 9 块 9 的体验营试一下。" },
+          { q:"她的「再想想」，背后真实原因是什么？", hint:"怕错、怕贵、怕没用，三种解法不同", from:"草包族检验", ex:"十次有八次是怕又白费钱，不是嫌贵。剩下是真没钱或家里不支持。怕白费的我让她先做测试或进体验营；真没钱的我不追，追了双方都难受。" },
+          { q:"你怎么让她先做一个小承诺？", hint:"《影响力》承诺一致", from:"小承诺", ex:"让她先填一个三分钟的问卷，说说读什么书、卡在哪。填过的人明显认真得多。或者让她在群里发一句「这周我要读完第几章」，发出来的基本都会读。" },
+          { q:"你的稀缺是什么？是真的还是编的？", hint:"假稀缺会毁信任", from:"《影响力》稀缺", ex:"真的。一对一一年最多接 10 个，每个人每周要花我两三小时。实战营每期控制在 50 人以内，人多作业改不过来。这不是话术，是我的体力上限。" },
+          { q:"成交之后，你会追问她什么？", hint:"7 天内 2 个问题，既给安全感也防白嫖", from:"服务边界", ex:"三天内问一次「开始读了吗，卡在哪」，第七天问「第一周任务做完了吗，哪最难」。既让她觉得有人管，也防那种买完消失、最后来退款说没用的。" }
+        ] },
+      { g:"D 组｜用户反馈闭环", from:"《上瘾》讲投入——她投入越多越离不开；反馈让她看见自己在变好",
+        skill:"lens", skillNote:"稿子写完、觉得不够深，用「四镜深度训练场」走一遍：定格→倒带→拉远→升空。",
+        qs:[
+          { q:"她怎么知道自己在变好？", hint:"看得见的进步才会续费", from:"《上瘾》投入", ex:"给每个人建一个进度表：读了几章、做了几张卡、写了几篇笔记，每周更新。人看到数字在涨就有动力。再让她每月翻一次自己第一个月的东西，对比最直接。" },
+          { q:"你多久收一次反馈？用什么事？", hint:"《上瘾》固定触发", from:"固定节奏", ex:"每周五答疑后收一次，就三个问题：这周最有收获的是什么、卡在哪、下周想解决什么。月底再做一次长问卷，控制在十道题以内，多了没人填。" },
+          { q:"收到反馈后，多久内回应她？", hint:"回应速度就是你的服务感", from:"《影响力》喜好", ex:"私信 24 小时内必回，这是底线。群里问题当天晚上九点集中答一次。秒回我做不到，也不想装得做得到。" },
+          { q:"用户说想学的东西，怎么进你的下一期？", hint:"《上瘾》投入", from:"共创", ex:"她们提的需求我记在一个文档里，每期结束按提到次数排序，前三名加进下一期。上期好多人问怎么写文案，这期我就加了一周文案课。" },
+          { q:"你打算把哪些真实反馈做成内容？", hint:"被拆是公开奖励", from:"口碑事件", ex:"两种：学员做出成果的前后对比，征得同意发出来；还有她们踩过的坑，匿名处理写成「别学她这样做」。说实话，第二种更容易火。" },
+          { q:"你要收集什么证言？在她哪个状态下问？", hint:"刚拿到结果时问", from:"《影响力》权威", ex:"三样：她做出的实物截图（卡片、笔记、产品）、一句她自己的原话、还有数据（涨了多少粉、卖了多少份）。时机就挑她刚出成果那两天，兴奋劲在，写的证言最生动。" }
+        ] }
+    ],
+    paths:{
+      inner:{ name:"内找（从你的故事出发）", desc:"你最大的内容资产是你自己走过的那条路。",
+        steps:["做完四组问题","找出数据最好那条内容为什么好——把它变成方法","用四段式写产品故事：钩子 → 痛点 → 方案 → 行动","写私聊话术：先答问题，不报价"] },
+      outer:{ name:"外找（从平台和打法出发）", desc:"你的产品需要一个能被传播的形态。",
+        steps:["做完四组问题","去「如何打造个人IP」找结构","拆 3 个同赛道爆款：钩子类型、开头句式、结尾动作","设计 30 天发布排期：几条是产品、几条是故事"] }
+    }
+  }
+];
+
+const THROUGH = [
+  { right:"权益四", name:"经验提炼与 Skill 沉淀", desc:"手把手带你运用 AI 工具，Skill 沉淀，效率翻倍。",
+    weekly:[
+      "每周共创时，你用 AI 完成自己那一周的产出——不是听彩彩讲工具怎么点",
+      "每次 1V1 都从 AI 的初稿开始改：AI 出方向，你填自己的经历，彩彩审",
+      "你自己沉淀下来的经验，存进你自己的知识库——下次 AI 调的就是你的方法"
+    ],
+    deliver:"3 个月内，你攒下至少 3 个属于自己的 Skill（提示词 / 流程 / 检查清单）",
+    check:[
+      { q:"你现在有几个能重复用的提示词？写下来了吗？", hint:"没写下来的等于没有" },
+      { q:"这周你用 AI 做成了什么？过程能复述吗？", hint:"能复述 = 能变成 Skill" },
+      { q:"有没有哪一步你每次都要重新教 AI？", hint:"那一步就该沉淀成一个 Skill" }
+    ] },
+  { right:"权益五", name:"专属 AI 商业助教", desc:"把彩彩方法库、你的知识库、你的 Skill 组合起来，搭成一个懂你的 AI 助教。",
+    weekly:[
+      "你的知识库接上 ima，AI 调的是你攒的材料，不是全网通用答案",
+      "彩彩的方法库 + 你的知识库 + 你的 Skill 三样合起来，就是一个懂你的 AI 助教",
+      "遇到卡点先问你的 AI 助教，它知道你的定位、你的产品、你的案例"
+    ],
+    deliver:"一个能回答「我的产品该怎么做」「我的用户是谁」「我的卡点在哪」的 AI 助教",
+    check:[
+      { q:"你的知识库现在装了多少条？能搜到你的定位吗？", hint:"先测：问它「我是谁」" },
+      { q:"你问它一个问题，它给的是通用答案还是你的答案？", hint:"给通用答案 = 库没装对东西" },
+      { q:"你的 Skill 装进 AI 了吗？跑一次试试。", hint:"要能跑，不是能写" }
+    ] }
+];
+
+const KB_BUILD = {
+  why:"这是权益一的最终交付——你的经历、能力、案例，沉淀成专属 SOP 知识库。后面三个阶段所有 AI 调用，都靠它。",
+  steps:[
+    { t:"① 定库名和层级", d:"库名定调（比如「XX 的商业方法库」），层级按「资产 / 方法 / 案例 / 素材」分四层。层级的意义是：AI 检索时知道该去哪一层找。", out:"库名 + 四层结构图" },
+    { t:"② 先放 20 条，不要一次 500 条", d:"从你这阶段的产出物里挑最有用的 20 条。20 条够 AI 调出正确方向了，500 条只会让它迷路。", out:"第一批 20 条清单" },
+    { t:"③ 每条要有 4 个要素", d:"① 这条讲什么 ② 用我自己的话是什么 ③ 我用它解决过什么 ④ 什么时候该用它。缺第 3 条就是笔记，不是知识。", out:"知识卡模板" },
+    { t:"④ 装上 ima，测一次", d:"装 ima skill → 让 AI 读你的库 → 问「我是谁」「我的产品是什么」。答得出来才算装对。", out:"两次测试结果" },
+    { t:"⑤ 每周加 3-5 条", d:"不是攒，是长。每周读完一本书、做一次诊断，就往里加。这才是「沉淀」。", out:"每周增量" }
+  ],
+  cardTemplate:["这条讲的是什么（一句话）","用我自己的话是什么（讲给不懂的朋友听）","我用它解决过什么（真实案例）","什么时候该用它（触发条件）"],
+  testQuestions:["我是谁？我的定位是什么？","我的产品是什么？卖给谁？","我最擅长解决什么问题？","给我一个真实案例","我的卡点是什么？下一步做什么？"]
+};
+
+const TOOLS = {
+  narrow:{ name:"窄化三步（戈汀）", body:"现在 → 再窄 → 最窄（可以写文案了）。最窄那层要带一个紧迫感的细节。", demo:"现在：30 多岁护士妈妈，三班倒，想做副业\n再窄：三班倒的医护/服务业妈妈，试过小红书+公众号都没结果，给自己留了 3 个月「最后机会」\n最窄：「辞职前最后 3 个月，还不知道做什么能真正赚到钱的妈妈」" },
+  sackboy:{ name:"草包族检验（费曼）", body:"如果她「知道了方向」，问题解决了吗？不会 → 那是表面痛点，继续往下挖。", demo:"痛点写的是「不知道哪个方向对」→ 往下挖：她换方向不是因为不知道，是因为「每次开始都在赌，怕又白费」。真痛点 = 她需要先知道这次值不值得做。" },
+  loss:{ name:"损失厌恶改写（卡尼曼）", body:"她最怕的不是赚不到，是又白费了。触发的情绪要选对。", demo:"❌「用 AI 帮你把书读薄」（渴望）\n✅「你不是缺执行力。你是每次开始之前，都不知道这次会不会又白费。」（恐惧）" },
+  junbs:{ name:"砍一刀（乔布斯）", body:"一条内容只留一个信息点。删到哪句不能删为止。", demo:"问题：这条文案有 3 个信息点 → 删到只剩 1 个 → 剩下那个是不是最想让人记住的？" },
+  counter:{ name:"反向思考（芒格）", body:"如果这个卖不出去，最可能的三个原因是什么？", demo:"① 结果承诺吸引了完全没方向的人 → 加入职筛选\n② 每周诊断的期待 vs 你一个人能投入的时间 → 诊断只挑 2-3 人，其余围观\n③ 定价承诺太长 → 锁价三年而不是永久" },
+  wow:{ name:"验真（费曼）", body:"8 岁小孩能听懂吗？讲不清就是还没成型。", demo:"「用 AI 帮你把书读薄」→ 小孩听不懂\n「一个月两本书，做出你自己的第一个产品」→ 小孩懂" }
+};
+
+const PILLARS = [
+  { n:"① 你的重启故事", p:"30%", d:"立人设、建信任。这是你最不敢发但最值钱的", ex:"40 岁手心向上，我是怎么靠自己挣到第一笔钱的" },
+  { n:"② 经验→产品的实操拆解", p:"30%", d:"展示方法。不讲书，讲你怎么用书拿到结果", ex:"我是怎么把一堆散装课重组后卖了 200 份的" },
+  { n:"③ AI 工作流", p:"20%", d:"跟读书/变现博主的区隔，流量密码", ex:"30 天读完 2 本书还输出了产品，我的 AI 方法全公开" },
+  { n:"④ 变现实录与案例", p:"10%", d:"用真实结果说话，不装不吹", ex:"我为什么把 99 块的读书会定成这个价" },
+  { n:"⑤ 中年女性搞钱心态", p:"10%", d:"情绪共鸣", ex:"你一直在用消费者的姿势学习" }
+];
+
+const KBS = [
+  { name:"500+本好书解读", role:"书里的方法、模型、金句", used:"给这一阶段派书、给方法出处" },
+  { name:"彩彩商业情报库", role:"一人公司、个人IP、写作系统、思维模型、赚钱案例", used:"外找路径：找已跑通的同类产品和定价" },
+  { name:"彩彩的知识乐高", role:"彩彩本人经历、读书笔记、运营文档、朋友圈文案库", used:"找佐证、给学员看同类人的真实案例" }
+];
+
+const PROMPTS = {
+  group:(g,stage,answers)=>`我在做「${stage.name}」阶段的${g.g.split("｜")[1]}。这是我的回答：\n\n${answers}\n\n请帮我：\n1) 从我的答案里，提炼出这一组最重要的 3 条，每条说清它意味着什么\n2) 用「${g.from}」这个方法，检验我的回答有没有漏掉关键信息——漏在哪\n3) 指出我回答里最矛盾或最含糊的地方，真答案通常藏在那里`,
+  review:(stage,answers)=>`这是我在「${stage.name}」阶段的产出：\n\n${answers}\n\n请用乔布斯的方式帮我砍：哪一句是删掉就不能成立的？它为什么必须留？\n然后告诉我这一周我只该做哪一件事，其他先放掉。`,
+  kbBuild:(answers)=>`我要搭建自己的个人商业知识库。我的资产盘点结果是：\n\n${answers}\n\n请帮我：\n1) 按「资产 / 方法 / 案例 / 素材」四层，给我一个知识库结构（库名 + 每层放什么）\n2) 从我上面的材料里，挑出最先要放进去的 20 条，按这四层分配\n3) 每条帮我写成知识卡，四要素：这条讲什么 / 用我自己的话是什么 / 我用它解决过什么 / 什么时候该用它\n4) 告诉我每次读完一本书、做完一次诊断，我该往库里加什么（增量规则）`
+};
+
+const COACH_PROMPTS = {
+  assign:(stage)=>`去「彩彩的500+本好书解读｜至尊版」里，针对「${stage.name}」这个阶段，找出最该读的 1-2 本，并说明每本重点读哪几章、每章解决学员的什么问题。给一个 4 周的阅读排期，每周不超过 3 章。`,
+  cases:`去「彩彩商业情报库」的「赚钱案例库」和「如何建立一人公司」里，找 3 个已经有人付钱的【学员方向】类产品。对每个说清：卖什么、卖多少钱、交付形态是什么、跟这个学员的能力差在哪。`,
+  proof:`去「彩彩的知识乐高」的「彩彩的个人故事及记录」和「发过的作品」里，找出跟【学员的卡点】最像的 2 个真实案例（嘉妈、宝妈、金霏、贝壳妈这几位），把她当时的原话摘出来。`,
+  copy:`去「彩彩的知识乐高」的「发过的作品」集合里，看彩彩自己写过什么内容、什么数据好、开头怎么起的。然后按这个结构，帮我为【学员的定位】写 3 条内容选题。`,
+  scripts:`去「彩彩的知识乐高」里的「omel脚本.docx」，找 2 篇跟【本期主题】最接近的参考稿，告诉我它们的开头句式结构是什么。学员要出镜讲自己的故事，我要照着这个结构帮她写第一版。`
+};
+
+const CHAT_STEPS = [
+  { t:"① 先问需求，不报价", d:"「先不聊价格。我想先了解你——你最近想学点什么或做点什么，最后停在了哪一步？」" },
+  { t:"② 设限筛选", d:"「你卡的这个点，正好是读书会第一阶段要解决的。不过我得说清楚，这个不是人人都适合——如果你只想找人监督你读书、不想动手做产品，我可能帮不到你。」" },
+  { t:"③ 真实稀缺", d:"「第一期 99，后面每期涨。早进的人价格锁在第一期。你可以先做个 5 分钟测试，看自己适不适合，再决定进不进，不用现在拍。」" }
+];
+
+const BOUNDARY = "我帮你理方向、给方案，但执行靠你自己。交付的是「清晰」，不是「成功」。";
+
+
+// ══════════ 参考书 · 每段该读哪本、为什么 ══════════
+const REFS = {
+  asset: {
+    books:[
+      { t:"定位", why:"资产盘点是占位之前的地基。先有你有什么，才谈占哪个词。", kb:"彩彩的500+本好书解读｜至尊版" }
+    ],
+    need:"不需要你读书。这是彩彩用来拆你答案的方法书——彩彩读，你答。",
+    tip:"如果你手上有《定位》的划线和笔记，可以传到下面的「我的参考书」，彩彩拆的时候会参考你的批注。"
+  },
+  position: {
+    books:[
+      { t:"定位", why:"定方向：你在用户心智里占哪个词。", kb:"彩彩的500+本好书解读｜至尊版" },
+      { t:"超级符号就是超级创意", why:"起名字、定购买理由、设计符号。", kb:"彩彩的500+本好书解读｜至尊版" },
+      { t:"真需求", why:"验证需求真伪：付过钱才算数。", kb:"彩彩的500+本好书解读｜至尊版" },
+      { t:"上瘾", why:"设计使用路径：触发—行动—酬赏—投入。", kb:"彩彩的500+本好书解读｜至尊版" },
+      { t:"李想产品实战16讲", why:"产品形态怎么设计。", kb:"彩彩的500+本好书解读｜至尊版" }
+    ],
+    need:"同样不需要你读书。彩彩拿这一百多本商业书当素材库，从里面挑出该给你的那几张卡。",
+    tip:"你要是已经买了这几本，把书单页或划线笔记传到下面——彩彩给的建议会贴着你的批注走，而不是通用答案。"
+  },
+  content: {
+    books:[
+      { t:"影响力", why:"说服的六个原理：互惠、承诺一致、社会认同、喜好、权威、稀缺。", kb:"彩彩的500+本好书解读｜至尊版" },
+      { t:"故事经济学", why:"产品故事的结构：一个人、一个困境、一个转变。", kb:"彩彩的500+本好书解读｜至尊版" },
+      { t:"疯传", why:"内容怎么被传出去：STEPPS 六个原则。", kb:"彩彩的500+本好书解读｜至尊版" },
+      { t:"上瘾", why:"私域怎么变成有节奏的关系。", kb:"彩彩的500+本好书解读｜至尊版" }
+    ],
+    need:"不用读。彩彩拆你内容的时候用这几本的方法。",
+    tip:"你写过的文案、公众号文章、朋友圈——这些比书更值钱，传到下面，彩彩改的时候能贴着你的语感。"
+  }
+};
+
+// ══════════ 联动 · 每一段带上一段的什么 ══════════
+const CARRY = {
+  position: {
+    from:"个人商业资产盘点",
+    keys:["story","talent","cases","sop"],
+    note:"这一段的定位、产品名、购买理由，都要从你第一段盘点出来的东西里长出来——不是另起炉灶。",
+    ai:"她已经做过资产盘点。下面是她的资产，请在这些资产的基础上做定位和产品设计，不要给她通用答案。"
+  },
+  content: {
+    from:"定位与产品搭建",
+    keys:["position","word","name","reason","form","price"],
+    note:"这一段的内容，要围绕你第二段定下来的定位和产品讲——内容是定位的翻译，不是另起一套。",
+    ai:"她已经定好了定位和产品。下面是她的定位与产品方案，请基于它规划内容、成交和私域，不要给她通用选题。"
+  }
+};
+
+// ══════════ 选题规划 · 输入什么、产出什么 ══════════
+const TOPIC_PLAN = {
+  from:"定位 + 资产 + 内容支柱",
+  out:[
+    { k:"directions", label:"3-5 个选题方向", hint:"每个方向说清：写给谁看、她的什么痛、你会怎么切" },
+    { k:"keywords", label:"选题关键词库", hint:"15-25 个词，分成 4 组：她的痛 / 她的身份 / 她的场景 / 她的解法" },
+    { k:"first", label:"第一个可以开写的选题", hint:"写好第一句开头 + 一句话钩子" },
+    { k:"plan", label:"30 天发什么", hint:"几条产品、几条故事、几条共鸣，列出来" }
+  ],
+  prompt:`帮我做一份选题规划。
+
+【我的定位】：【粘贴一句话定位】
+【我的目标用户】：【粘贴目标用户画像】
+【我的经历资产】：【粘贴经历资产表 + 天赋信号 + 案例素材】
+【我的产品】：【粘贴产品名 + 购买理由】
+【我的内容支柱】：我从这几类发：我的重启故事 / 经验→产品的实操拆解 / AI 工作流 / 变现实录与案例 / 中年女性搞钱心态
+
+请按「老树新芽选题簇」的方法来做：
+1) 先判断我的真实感受接的是哪个已被市场验证过的爆款老选题（给 2-3 个候选，说明为什么）
+2) 做语义磨损诊断：这个老选题被写烂的是什么，我切进去怎么避开
+3) 展开概念簇，从我这几个内容支柱里，展开 3-5 个可写的选题方向。每个说清：写给谁看、她的什么痛、我会怎么切
+4) 提炼关键词库：15-25 个词，分四组——她的痛 / 她的身份 / 她的场景 / 她的解法
+5) 从这 3-5 个方向里，挑出第一个我现在就能开写的，给我第一句开头和一句话钩子
+6) 排 30 天发布计划：几条产品、几条故事、几条共鸣
+
+不要直接给我写稿，先给方向和关键词。`
+};
+
+if (typeof module !== "undefined") {
+  module.exports = { POSTER, RIGHTS, TIMELINE, STAGES, THROUGH, KB_BUILD, TOOLS, PILLARS, KBS, PROMPTS, COACH_PROMPTS, CHAT_STEPS, BOUNDARY, REFS, CARRY, TOPIC_PLAN };
+}
+
+</script>
+<script>
+/* ==== creators.js ==== */
+// 创作工具包 · 来自老明的创作 skill + 小红书全流程 + gzh-pipeline
+// 每个工具 = 一个可复制调用的创作动作，学员在阶段三做内容时用
+//
+// 定位说明：
+//   前 6 个是「创作方法论」——纯思考框架，学员在自己的 AI 里就能用
+//   小红书全流程 / gzh-pipeline 是「执行型 Agent Skill」——有脚本能真发布，
+//   装在彩彩或学员自己的 WorkBuddy 里，工作台负责告诉学员怎么用
+
+const CREATOR_TOOLS = [
+  {
+    id: "topic",
+    name: "老树新芽选题簇",
+    tag: "选题",
+    what: "把一段零散的真实感受，接进一个已被市场验证过的爆款老选题，再从概念簇里找到新的可写切口。",
+    not: "不是从零找选题，是让一棵老树重新长出新芽",
+    when: "你有话想说但不知道能写成什么；或者想做老选题又怕写成旧鸡汤",
+    call: `我有一段真实的口播语料，想把它变成一个能写的选题。
+
+【我的语料】：【粘贴你随口说的话，不用整理】
+
+请按「老树新芽选题簇」的方法来做：
+1) 先判断我这段语料接的是哪个已被验证过的爆款老选题（可以给 2-3 个候选，说明为什么）
+2) 对每个候选做情绪母题分析：这个老选题的情绪母题是什么
+3) 做语义磨损诊断：这个老选题被写烂的部分是什么，我从哪里切进去能避开
+4) 展开概念簇：从这个老选题周围列出可写的概念簇
+5) 跨领域同构：找 1-2 个别的领域里同构但没人写过的切口
+6) 最后给我 3 个可写的选题，并说明每个的「新」在哪
+
+不要直接给我写稿，先给选题。`,
+    output: "3 个带说明的可写选题"
+  },
+  {
+    id: "lens",
+    name: "四镜深度训练场",
+    tag: "深度",
+    what: "定格→倒带→拉远→升空，四颗镜头带你看一遍普通素材里被忽略的事实、来路、处境与意义。",
+    not: "不是引用高级理论，不是制造漂亮金句，是拒绝停在二手世界递来的第一个答案",
+    when: "你有一段素材，但总觉得不够深，不知道深在哪",
+    call: `我有一段素材，想把它写深。
+
+【我的素材】：【粘贴】
+
+请用「四镜深度训练场」带我走一遍：定格（这到底是什么事实）、倒带（它从哪来）、拉远（它处在一个什么处境里）、升空（它意味着什么）。
+
+规则：一次只问我一个问题，每颗镜头最多三轮。三轮内我答不出来时，直接给我一个版本带我过去，不要让我卡在原地。这是训练不是考试。`,
+    output: "一句仍然生长在原始细节上的创作命题"
+  },
+  {
+    id: "mood",
+    name: "时代情绪探测器",
+    tag: "选题",
+    what: "回答「为什么偏偏是这个东西，在这个时间点，以这种形式，击中了这一群人」。",
+    not: "不是给爆款找一个宏大说法，不是把理论名当深度",
+    when: "你要蹭一个热点，但不想蹭得没水平；或你想看懂为什么这条爆了",
+    call: `帮我做一次时代情绪分析。
+
+【材料】：【粘贴截图/链接/文本/一个现象】
+
+按「时代情绪探测器」的方法回答：它究竟火在哪里（先验证，别急着升华）、传播近因、人群处境、时代结构、平台机制、跨学科理论。
+
+纪律：不要把每个爆款都解释成时代症候，不要用理论名代替深度，不要用大量平行案例代替因果分析，不虚构热度和数据。不需要一轮轮问我，你自己判断，最后给完整报告。`,
+    output: "一份时代情绪分析报告"
+  },
+  {
+    id: "high",
+    name: "维度尺度升维",
+    tag: "表达",
+    what: "把「我怎么想、我怎么感受、我该怎么办」的低位解释，交给一个更高位的主体重新处理。",
+    not: "不是给痛苦找意义，不是把句子写玄，是让「我」退后，让更大的系统上场",
+    when: "你的表达总是「我好惨/我好难」，需要换一种冷准的说法",
+    call: `把下面这段表达升维。
+
+【原表达】：【粘贴】
+
+请用「维度尺度升维」的方法处理：选一个高位主体（宇宙/时间/神明/命运/算法/制度/城市/身体/历史），用它的冷淡命名这段经验。
+
+纪律：不是让句子更大更玄，是让「我」退后。写完给我 3 个版本，并说明每个版本换了哪个主体、原句的哪个字被替换了。
+
+原句：___ → 升维：___`,
+    output: "3 个换过主体的升维版本"
+  },
+  {
+    id: "module",
+    name: "认知递进·模块划分",
+    tag: "结构",
+    what: "把一篇稿子划分成若干 Block，让作者看见每一段表达正在完成什么任务。",
+    not: "不打分、不诊断、不改稿、不优化，只画现状结构地图",
+    when: "你的稿子读起来「很碎」「一直在重复」「讲着讲着换了话题」，但你不知道碎在哪",
+    call: `请用「认知递进·模块划分」Skill 处理下面这篇稿子。
+
+【我的稿子】：【粘贴】
+
+只做一件事：按「主要认知/注意力任务发生变化」的位置划界，分成 Block A、B、C…，给每个 Block 标一个简短准确的功能标签，完整保留每段原文。
+
+不要打分，不要给优化建议，不要改稿、删废话、调顺序、合并。有歧义的地方标注边界置信度和另一种合理划法。`,
+    output: "一张现状结构地图"
+  },
+  {
+    id: "hammer",
+    name: "意义真空·故事小锤子",
+    tag: "选题",
+    what: "扫描生活里尚未被解释的瞬间，抓住一个反常或多余的细节，用两把钥匙找到新解释。",
+    not: "不是给小事配一句深刻的话，是先让观众进入熟悉经验，再跟随叙述者注意到异常",
+    when: "你要写共鸣向内容，但觉得没角度；或你的开头太平",
+    call: `用「意义真空探测器·故事小锤子」帮我写。
+
+【我想写的场景】：【粘贴】
+
+结构：共同的生活旧经验 × 一个尚未解释的奇怪细节 × 有解释力的新理解 × 第一人称故事。
+
+请先帮我找到这个场景里的「意义真空」——哪件事反复发生却很少有人追问为什么、哪个细节现有解释说不通、哪里只能用「焦虑/内耗/缺爱」笼统带过。然后用两把探测钥匙找到 2-3 个新解释，每个写成一个有画面感的第一人称小锤子故事。
+
+不要迎合任何一类受众已有的信念，要把这个场景解释得足够深。`,
+    output: "2-3 个故事小锤子"
+  },
+  {
+    id: "xhs",
+    name: "小红书全流程",
+    tag: "发布",
+    what: "选题→写正文→出图→落盘→网页发布→复盘，六步全流程 Agent Skill。",
+    not: "这是执行型 Skill，要装在你的 WorkBuddy 里，不是复制一段提示词就够",
+    when: "你要把内容真的发出去，不只是写出来",
+    install: true,
+    installNote: "解压后把 xiaohongshu-workflow-pro 整个文件夹放进 ~/.workbuddy/skills/，重启 WorkBuddy 即可。首次使用会引导你建《账号运营档案.md》，之后自动记住偏好。",
+    call: `用「小红书全流程运营」skill 做一篇笔记。
+
+【主题】：【粘贴你的选题】
+【我的定位】：【粘贴你阶段一写的一句话定位】
+【我的目标用户】：【粘贴你阶段二的画像】
+
+第一次用的话，先按 skill 的引导流程建好账号档案；已建档就直接走流程。`,
+    output: "一篇能发的笔记（含配图）"
+  },
+  {
+    id: "gzh",
+    name: "公众号图文流水线",
+    tag: "发布",
+    what: "文生图→写文章→排版→推送草稿箱，一条流水线。",
+    not: "执行型 Skill，需要公众号 AppID/Secret 和 IP 白名单",
+    when: "你的内容要发公众号，尤其是长文",
+    install: true,
+    installNote: "解压后把 gzh-pipeline 放进 ~/.workbuddy/skills/。运行前需在 scripts/config.json 填好 appid/secret，并在公众号后台「开发→基本配置→IP白名单」加上本机公网 IP，否则报 40164。",
+    call: `用 gzh-pipeline 出一篇带配图的公众号文章并推到草稿箱。
+
+【主题】：【粘贴】
+【我的定位】：【粘贴你阶段一的一句话定位】
+
+正文 HTML 由你产出，图片位置写 {{IMG:images/01.png}} 占位符，交给脚本替换。`,
+    output: "一篇进草稿箱的公众号图文"
+  }
+];
+
+// 阶段三里的「创作动作」清单：学员做完内容方案后按这个顺序走
+const CREATOR_FLOW = [
+  { t:"① 选题", d:"用老树新芽选题簇，把你的一段真实感受接进老选题，找到新切口", tool:"topic" },
+  { t:"② 深挖", d:"用四镜深度训练场，把选中的素材走一遍四颗镜头", tool:"lens" },
+  { t:"③ 蹭热点（可选）", d:"要蹭就蹭得准，用时代情绪探测器先验证它火在哪", tool:"mood" },
+  { t:"④ 表达", d:"用维度尺度升维，把「我好难」换成高位主体的说法", tool:"high" },
+  { t:"⑤ 查结构", d:"稿子读起来碎，用认知递进·模块划分看碎在哪", tool:"module" },
+  { t:"⑥ 写故事", d:"要共鸣向开头，用意义真空·故事小锤子", tool:"hammer" },
+  { t:"⑦ 发布", d:"小红书 / 公众号，装好对应 Skill 后让 AI 走全流程", tool:"xhs" }
+];
+
+// 安装型 skill 的安装指引（放在彩彩端）
+const INSTALL_GUIDE = [
+  { name:"小红书全流程", steps:[
+    "解压 小红书全流程skill.zip",
+    "得到 xiaohongshu-workflow-pro 文件夹（含 SKILL.md + scripts + templates）",
+    "整个文件夹复制到 ~/.workbuddy/skills/ 下",
+    "重启 WorkBuddy，对它说「做一篇小红书笔记」",
+    "首次会问 5 个问题建《账号运营档案.md》，之后自动记住偏好"
+  ]},
+  { name:"gzh-pipeline（公众号）", steps:[
+    "解压 gzh-pipeline.zip",
+    "gzh-pipeline 文件夹复制到 ~/.workbuddy/skills/ 下",
+    "复制 scripts/config.example.json 为 scripts/config.json，填入 appid / secret",
+    "公众号后台「开发 → 基本配置 → IP白名单」加上本机公网 IP，否则报 40164",
+    "自检：python scripts/gzh_publish.py --check"
+  ]},
+  { name:"老明 6 个创作 skill", steps:[
+    "每个 zip 是嵌套结构：外层 zip 里还有一个 ExportBlock-*.zip",
+    "解开内层 zip，得到「私人与共享」目录下的 .md 方法论文件",
+    "这些是纯方法论，不用装——工作台已经把调用方式写好了",
+    "想让 AI 直接用，把对应 .md 内容粘贴成 Skill 或核心指令即可"
+  ]}
+];
+
+if (typeof module !== "undefined") {
+  module.exports = { CREATOR_TOOLS, CREATOR_FLOW, INSTALL_GUIDE };
+}
+
+</script>
+<script>
+/* ==== linked.js ==== */
+// ══════════ 联动 + 参考书 + 选题规划 ══════════
+// 这三块是 v10 新增：跨段联动、参考书上传、选题方向规划
+
+// ── 联动区 · 阶段卡里显示「AI 会同时看到什么」──
+function renderCarryBox(){
+  const c = CARRY[STAGES[S.stage].id];
+  if(!c) return "";
+  const items = carryRefs();
+  const body = items.length
+    ? items.map(i=>`<div class="cy"><div class="cyl">${esc(i.label)}</div><div class="cyv">${esc(i.v.slice(0,160))}${i.v.length>160?"…":""}</div></div>`).join("")
+    : `<div class="cy empty"><div class="cyv">你还没填上一段的产出物。填了之后，这一段的分析会自动带着它们走——你不用自己整理，也不用重复解释。</div></div>`;
+  return `<div class="carry">
+    <div class="chh">联动 · 这一段会自动带上你上一段的产出</div>
+    <div class="chd">${esc(c.note)}</div>
+    ${body}
+    <div class="btnrow"><button class="cpy" data-carry="1">复制：这一段的提示词（已带上一段产出）</button></div>
+  </div>`;
+}
+function bindCarry(){
+  const cb=$$("#sec-stage [data-carry]")[0];
+  if(!cb) return;
+  cb.onclick=e=>{
+    const items=carryRefs();
+    const c=CARRY[STAGES[S.stage].id];
+    const head = items.length
+      ? c.ai+"\n\n" : "（我还没填上一段的产出物，请先给我初步方向，别给我通用答案。）\n\n";
+    const body = items.length ? items.map(i=>`【${i.label}】\n${i.v}`).join("\n\n") : "";
+    const st=STAGES[S.stage];
+    const q = (st.questions||[]).length
+      ? st.questions.map((x,i)=>`${i+1}. ${x}`).join("\n")
+      : (st.groups||[]).map((g,gi)=>`【${g.g}】\n`+g.qs.map((x,qi)=>`${qi+1}. ${x.q}`).join("\n")).join("\n\n");
+    copy(`${head}${body}\n\n【这一段要回答的三个问题】\n${q}`, e.target);};
+}
+
+// ── 联动：拿到上一段的产出 ──
+function carryRefs(){
+  const c = CARRY[STAGES[S.stage].id];
+  if(!c) return [];
+  const prev = STAGES[STAGES[S.stage].no-2];
+  if(!prev) return [];
+  return c.keys.map(k=>{
+    const d = prev.deliverables.find(x=>x.k===k);
+    const v = (S.out[k]||"").trim();
+    return v ? {label:(d?d.label:k), v} : null;
+  }).filter(Boolean);
+}
+function carryText(){
+  const items = carryRefs();
+  if(!items.length) return "";
+  return "\n\n【她上一段的产出（你要基于这个继续，不要另起炉灶）】\n" +
+    items.map(i=>`【${i.label}】\n${i.v}`).join("\n\n") + "\n";
+}
+
+// ── 参考书 ──
+function renderRefsSec(){
+  const r = REFS[STAGES[S.stage].id];
+  $("#sec-refs").innerHTML = `
+    <div class="sech">
+      <h2>这一段彩彩参考哪些书</h2>
+      <div class="sd">${esc(r.need)}</div>
+    </div>
+    <div class="card">
+      <div class="refs">
+        ${r.books.map(b=>`
+          <div class="ref"><div class="rt">${esc(b.t)}</div><div class="rw">${esc(b.why)}</div>
+          <div class="rk">来源：${esc(b.kb)}</div></div>`).join("")}
+      </div>
+      <div class="note" style="margin-top:18px">${esc(r.tip)}</div>
+      <div class="navl" style="margin-top:26px">我的参考书（可选，传上来彩彩拆的时候会参考）</div>
+      <div class="upl">
+        <input type="file" id="fileIn" accept=".md,.txt,.markdown" multiple style="display:none">
+        <button class="btn g" id="pickFile">＋ 传文件（md / txt）</button>
+        <span style="font-size:12.5px;color:var(--ink3)">读书笔记、划线、文案稿都行。存在你自己的浏览器里，不上传。</span>
+      </div>
+      <div id="fileList" style="margin-top:14px"></div>
+    </div>`;
+  $("#pickFile").onclick = ()=>$("#fileIn").click();
+  $("#fileIn").onchange = e => handleFiles(e.target.files);
+  renderFileList();
+}
+function renderFileList(){
+  const box=$("#fileList"); if(!box) return;
+  if(!S.files||!S.files.length){
+    box.innerHTML=`<div style="font-size:12.5px;color:var(--ink3)">还没有传文件。没传也能走——彩彩拆的时候会直接去她的书单库调。</div>`;
+    return;
+  }
+  box.innerHTML = S.files.map((f,i)=>`
+    <div class="file"><div class="fn">${esc(f.name)}</div>
+      <div class="fs">${(f.text.length/1000).toFixed(1)}k 字</div>
+      <button class="cpy" data-del="${i}">移除</button></div>`).join("") +
+    `<div class="btnrow"><button class="cpy" data-use="1">复制：把这些参考书一起带给 AI</button></div>`;
+  $$("#fileList [data-del]").forEach(b=>b.onclick=()=>{S.files.splice(+b.dataset.del,1);save();renderFileList();});
+  const ub=$$("#fileList [data-use]")[0];
+  if(ub) ub.onclick=e=>{
+    const body=S.files.map(f=>`【我上传的参考书：${f.name}】\n${f.text.slice(0,2000)}`).join("\n\n");
+    copy(`我上传了一些参考书，请基于这些内容帮我做分析。\n\n${body}`,e.target);};
+}
+function handleFiles(list){
+  if(!list||!list.length) return;
+  const max=200*1024, totalMax=800*1024;
+  let total=(S.files||[]).reduce((n,f)=>n+f.text.length,0);
+  [...list].forEach(file=>{
+    if(file.size>max){ toast(`「${file.name}」超过 200KB，跳过了`); return; }
+    const rd=new FileReader();
+    rd.onload=()=>{
+      const text=String(rd.result||"");
+      if(total+text.length>totalMax){ toast("参考资料总量超了，先删几个"); return; }
+      total+=text.length; S.files=S.files||[];
+      S.files.push({name:file.name,text:text}); save(); renderFileList();
+      toast(`已加入「${file.name}」`);
+    };
+    rd.readAsText(file,"utf-8");
+  });
+}
+
+// ── 选题规划 ──
+function renderTopicSec(){
+  const show=STAGES[S.stage].id==="content";
+  $("#sec-topic").classList.toggle("hidden",!show); if(!show) return;
+  $("#sec-topic").innerHTML = `
+    <div class="sech">
+      <h2>选题方向规划</h2>
+      <div class="sd">${esc(TOPIC_PLAN.from)} → ${esc(TOPIC_PLAN.out.map(o=>o.label).join("、"))}</div>
+    </div>
+    <div class="card">
+      <div class="navl" style="margin-top:0">这一步会产出</div>
+      <div class="refs" style="margin-bottom:22px">
+        ${TOPIC_PLAN.out.map(o=>`
+          <div class="ref"><div class="rt">${esc(o.label)}</div><div class="rw">${esc(o.hint)}</div></div>`).join("")}
+      </div>
+      <div class="navl">它会用到你的这些</div>
+      <div id="topicInput" style="margin-bottom:20px"></div>
+      <div class="btnrow" style="margin-top:0">
+        <button class="btn a" id="topicGen">生成选题规划（复制给 AI）</button>
+      </div>
+      <div class="note" style="margin-top:16px">
+        生成结果会同时带上：你的定位、目标用户、经历资产、产品、内容支柱。AI 拿到的是一整套东西，不是一句孤立请求。
+      </div>
+    </div>`;
+  const pick=(k,label)=>{
+    const v=(S.out[k]||"").trim();
+    return v?`<div class="ti"><div class="tin">${esc(label)}</div><textarea data-ti="${k}">${esc(v)}</textarea></div>`:"";
+  };
+  $("#topicInput").innerHTML =
+    pick("position","一句话定位")+pick("persona","目标用户画像")+
+    pick("story","经历资产表")+pick("talent","天赋信号")+pick("cases","案例素材")+
+    pick("name","产品名")+pick("reason","一句购买理由")+
+    `<div class="ti"><div class="tin">内容支柱（可改）</div>
+      <textarea data-ti="pillars">我的重启故事 / 经验→产品的实操拆解 / AI 工作流 / 变现实录与案例 / 中年女性搞钱心态</textarea></div>`;
+  $$("#topicInput [data-ti]").forEach(el=>el.oninput=e=>{
+    S.ti=S.ti||{}; S.ti[el.dataset.ti]=el.target.value; save();});
+  // 内容支柱给默认值，学员没改过也能直接用
+  if(!S.ti||!S.ti.pillars){
+    S.ti=S.ti||{};
+    S.ti.pillars="我的重启故事 / 经验→产品的实操拆解 / AI 工作流 / 变现实录与案例 / 中年女性搞钱心态";
+    save();
+  }
+  $("#topicGen").onclick=e=>{
+    const DEF_PILLARS="我的重启故事 / 经验→产品的实操拆解 / AI 工作流 / 变现实录与案例 / 中年女性搞钱心态";
+    const g=k=>{
+      const v = (S.ti&&S.ti[k]!==undefined && S.ti[k]!=="") ? S.ti[k]
+                : (S.out[k]||"");
+      const t = (v||"").trim();
+      if(t) return t;
+      return k==="pillars" ? DEF_PILLARS : "（未填）";
+    };
+    copy(TOPIC_PLAN.prompt
+      .replace("【我的定位】：【粘贴一句话定位】","【我的定位】："+g("position"))
+      .replace("【我的目标用户】：【粘贴目标用户画像】","【我的目标用户】："+g("persona"))
+      .replace("【我的经历资产】：【粘贴经历资产表 + 天赋信号 + 案例素材】","【我的经历资产】：\n"+g("story")+"\n"+g("talent")+"\n"+g("cases"))
+      .replace("【我的产品】：【粘贴产品名 + 购买理由】","【我的产品】：\n"+g("name")+"\n"+g("reason"))
+      .replace("【我的内容支柱】：我从这几类发：我的重启故事 / 经验→产品的实操拆解 / AI 工作流 / 变现实录与案例 / 中年女性搞钱心态","【我的内容支柱】："+g("pillars")), e.target);};
+}
+
+</script>
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const LS = "wb_coach_v7";
+let S = { stage:0, q:{}, out:{}, kb:{}, through:{}, rep:{}, mode:"student" };
+try { Object.assign(S, JSON.parse(localStorage.getItem(LS)||"{}")); } catch(e){}
+const save = () => { try{ localStorage.setItem(LS, JSON.stringify(S)); }catch(e){} };
+const esc = s => String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("on"),2100);}
+async function copy(text,btn){
+  try{await navigator.clipboard.writeText(text);}
+  catch(e){const ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();}
+  if(btn){const o=btn.textContent;btn.textContent="已复制";btn.classList.add("done");setTimeout(()=>{btn.textContent=o;btn.classList.remove("done");},1600);}
+  toast("已复制");
+}
+function download(name,text,mime){
+  const blob=new Blob([text],{type:(mime||"text/markdown")+";charset=utf-8"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+
+$("#hchips").innerHTML = POSTER.teacherLines.map(t=>`<span>${esc(t)}</span>`).join("");
+
+// ── 左侧导航 ──
+function renderNav(){
+  $("#navStages").innerHTML = STAGES.map((s,i)=>{
+    let t=0,d=0;s.groups.forEach((g,gi)=>g.qs.forEach((q,qi)=>{t++;if((S.q[qKey(i,gi,qi)]||"").trim())d++;}));
+    const done = d>=t && t>0;
+    const rp = S.rep && S.rep[i];
+    const rline = isCoach()
+      ? `<span class="sst" style="color:${rp&&rp.done?"var(--ok)":"var(--ink3)"}">${rp&&rp.done?"✓ 报告已定稿":(rp&&rp.text?"○ 报告待定稿":"○ 报告未生成")}</span>`
+      : "";
+    return `<button class="stage ${i===S.stage?"on":""} ${done?"done":""}" data-i="${i}">
+      <span class="sno">第 ${i+1} 段</span>
+      <span class="snm">${esc(s.name)}</span>
+      <span class="sst"><i>${done?"✓":d}</i>${d} / ${t} 题</span>
+      ${rline}
+    </button>`;}).join("");
+  $$("#navStages .stage").forEach(b=>b.onclick=()=>{
+    S.stage=+b.dataset.i;save();renderAll();
+    document.getElementById("sec-stage").scrollIntoView({behavior:"smooth",block:"start"});});
+  $("#navJumps").innerHTML = `
+    ${isCoach()?`<button class="jump" data-j="sec-report">这一段的报告</button>`:""}
+    <button class="jump" data-j="sec-questions">引导问题</button>
+    <button class="jump" data-j="sec-output">这一段的产出物</button>
+    <button class="jump" data-j="sec-after">填完之后怎么办</button>
+    <button class="jump" data-j="sec-diag">彩彩会怎么拆你的答案</button>
+    <button class="jump" data-j="sec-export">导出档案</button>`;
+  $$("#navJumps .jump").forEach(b=>b.onclick=()=>{
+    document.getElementById(b.dataset.j).scrollIntoView({behavior:"smooth",block:"start"});});
+
+  let T=0,D=0,RD=0;
+  STAGES.forEach((s,i)=>{
+    s.groups.forEach((g,gi)=>g.qs.forEach((q,qi)=>{T++;if((S.q[qKey(i,gi,qi)]||"").trim())D++;}));
+    if(S.rep&&S.rep[i]&&S.rep[i].done)RD++;
+  });
+  $("#navProg").innerHTML=`已答 <b>${D}</b> / ${T} 题 · 报告定稿 <b>${RD}</b> / ${STAGES.length}`;
+}
+
+// ── 阶段头 ──
+function renderStageSec(){
+  const s=STAGES[S.stage];
+  $("#sec-stage").innerHTML=`
+    <div class="card">
+      <div class="shead">
+        <div class="sl">
+          <div class="sno">第 ${s.no} 段 · ${s.right}</div>
+          <div class="stitle">${esc(s.name)}</div>
+          <div class="sgoal">${esc(s.goal)}</div>
+          <div class="books"><em>我参考的书</em>${s.books.map(b=>`<span>${esc(b)}</span>`).join("")}</div>
+        </div>
+        <div class="sr">
+          <div style="font-size:12px;color:var(--ink3);letter-spacing:.08em;margin-bottom:8px">走哪条路</div>
+          <div style="font-size:13px;color:var(--ink2);line-height:1.6">
+            ${Object.entries(s.paths).map(([k,p])=>`<div style="margin-bottom:6px"><b style="font-weight:500">${esc(p.name.split("（")[0])}</b><br><span style="color:var(--ink3)">${esc(p.desc)}</span></div>`).join("")}
+          </div>
+        </div>
+      </div>
+      <div class="coach">
+        <div class="ch">这一段我陪你做的事</div>
+        <ul>${s.coachDo.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
+      </div>
+      ${renderCarryBox()}
+    </div>`;
+  bindCarry();
+}
+
+// ── 引导问题 ──
+function qKey(si,gi,qi){return si+"-"+gi+"-"+qi;}
+function renderQs(){
+  const s=STAGES[S.stage];
+  $("#qh").textContent = `${s.name}｜引导问题`;
+  $("#qBox").innerHTML=s.groups.map((g,gi)=>`
+    <div class="grp">
+      <div class="gh"><span>${esc(g.g)}</span>
+        <span style="display:flex;gap:8px;flex:none">
+          ${g.skill?`<button class="cpy sk" data-sk="${gi}">用「${esc((CREATOR_TOOLS.find(t=>t.id===g.skill)||{}).name||"")}」写</button>`:""}
+          <button class="cpy" data-gc="${gi}">复制这一组</button></span></div>
+      <div class="gf">我的方法出处：${esc(g.from)}</div>
+      ${g.skillNote?`<div class="sknote"><span class="skn">${esc((CREATOR_TOOLS.find(t=>t.id===g.skill)||{}).name||"")}</span>${esc(g.skillNote)}</div>`:""}
+      ${g.qs.map((q,qi)=>`
+        <div class="q">
+          <div class="qt"><span class="qn">${qi+1}</span><span>${esc(q.q)}</span></div>
+          ${q.hint?`<div class="qh">${esc(q.hint)}</div>`:""}
+          <div class="qs">↳ ${esc(q.from)}</div>
+          ${q.ex?`<div class="exwrap"><div class="exlab">示 例</div><div class="ex">${esc(q.ex)}</div></div>`:""}
+          <textarea data-q="${qKey(S.stage,gi,qi)}" placeholder="写不完整的先留空，深访时一起补">${esc(S.q[qKey(S.stage,gi,qi)]||"")}</textarea>
+        </div>`).join("")}
+    </div>`).join("");
+  $$("#qBox [data-q]").forEach(el=>el.oninput=e=>{S.q[el.dataset.q]=e.target.value;save();updQProg();renderNav();});
+  $$("#qBox [data-gc]").forEach(b=>b.onclick=()=>copy(buildGroup(+b.dataset.gc),b));
+  $$("#qBox [data-sk]").forEach(b=>b.onclick=()=>{
+    const gi=+b.dataset.sk, g=STAGES[S.stage].groups[gi];
+    const t=CREATOR_TOOLS.find(x=>x.id===g.skill);
+    // 把这一组的答案 + skill 调用指令一起带走
+    const ans=g.qs.map((q,qi)=>{
+      const v=(S.q[qKey(S.stage,gi,qi)]||"").trim();
+      return `${qi+1}. ${q.q}\n${v||"（未填）"}`;
+    }).join("\n\n");
+    copy(t.call.replace(/【粘贴[^】]*】/g,"【粘贴】") + "\n\n【我这一组的原始回答】\n" + ans, b);
+  });
+  updQProg();
+}
+function updQProg(){
+  const s=STAGES[S.stage];let t=0,d=0;
+  s.groups.forEach((g,gi)=>g.qs.forEach((q,qi)=>{t++;if((S.q[qKey(S.stage,gi,qi)]||"").trim())d++;}));
+  $("#qh").textContent = `${s.name}｜引导问题（${d}/${t}）`;
+}
+
+// ── 产出物 ──
+function renderOut(){
+  const s=STAGES[S.stage];
+  $("#outForm").innerHTML=s.deliverables.map(d=>`
+    <div class="oi"><div class="ol">${esc(d.label)}</div><div class="oh">${esc(d.hint)}</div>
+      <textarea data-o="${d.k}" placeholder="填这里">${esc(S.out[d.k]||"")}</textarea></div>`).join("");
+  $$("#outForm [data-o]").forEach(el=>el.oninput=e=>{S.out[el.dataset.o]=e.target.value;save();});
+}
+
+// ── 填完之后 ──
+function renderAfter(){
+  const s=STAGES[S.stage];
+  $("#afterBox").innerHTML=`
+    <div class="ah">填完之后，接下来怎么走</div>
+    <div class="ad">${esc(s.name)}这一段不是写完就算。你填完，我接过去拆。</div>
+    ${s.after.map((a,i)=>`
+      <div class="astep"><div class="asn">${i+1}</div>
+        <div><div class="ast">${esc(a.t)}</div><div class="asd">${esc(a.d)}</div></div></div>`).join("")}
+    <div class="btnrow">
+      <button class="btn a" id="afterCopy">复制这一组，发给彩彩</button>
+      <button class="btn g" id="afterExport">导出完整档案</button>
+    </div>`;
+  $("#afterCopy").onclick=e=>{
+    // 复制当前阶段所有组的完整内容
+    const all = STAGES[S.stage].groups.map((g,gi)=>buildGroup(gi)).join("\n\n");
+    copy(all,e.target);};
+  $("#afterExport").onclick=()=>{download(`${STAGES[S.stage].name}-${new Date().toISOString().slice(0,10)}.md`,buildDoc());toast("已下载 Markdown 文档");};
+}
+
+// ── 知识库 ──
+function renderKBSec(){
+  const show=S.stage===0;
+  $("#sec-kb").classList.toggle("hidden",!show); if(!show) return;
+  $("#sec-kb").innerHTML=`
+    <div class="sech">
+      <h2>搭建我自己的知识库</h2>
+      <div class="sd">${esc(KB_BUILD.why)}</div>
+    </div>
+    <div class="card">
+      <div class="steps5">
+        ${KB_BUILD.steps.map((st,i)=>`
+          <div class="s5"><div class="s5n">${i+1}</div><div>
+            <div class="s5t">${esc(st.t)}</div><div class="s5d">${esc(st.d)}</div>
+            <div class="s5o">这一步要交出来：${esc(st.out)}</div></div></div>`).join("")}
+      </div>
+      <div style="margin-top:26px">
+        <div class="navl" style="margin-top:0">知识卡四要素（每条都要有）</div>
+        <div class="ipt"><input data-kb="card" value="${esc(S.kb.card||"")}" placeholder="${esc(KB_BUILD.cardTemplate.join(" / "))}"></div>
+        <div class="navl">库名和层级</div>
+        <div class="ipt"><label style="font-size:14px;margin-bottom:7px;display:block">库名 —— 定调用的</label>
+          <input data-kb="name" value="${esc(S.kb.name||"")}" placeholder="例：XX 的商业方法库"></div>
+        <div class="ipt"><label style="font-size:14px;margin-bottom:7px;display:block">四层 —— 资产 / 方法 / 案例 / 素材</label>
+          <textarea data-kb="layers" placeholder="资产层：&#10;方法层：&#10;案例层：&#10;素材层：">${esc(S.kb.layers||"")}</textarea></div>
+        <div class="navl">先放进去的 20 条</div>
+        <div class="ipt"><textarea data-kb="first20" placeholder="一行一条，先放最有用的 20 条">${esc(S.kb.first20||"")}</textarea></div>
+        <div class="navl">装上 ima，测这 5 个问题</div>
+        <div class="ipt"><textarea data-kb="test" placeholder="测完把 AI 的答案记在这">${esc(S.kb.test||"")}</textarea></div>
+      </div>
+      <div class="btnrow"><button class="btn a" id="kbToAI">让 AI 帮我设计我的知识库</button></div>
+    </div>`;
+  $$("#sec-kb [data-kb]").forEach(el=>el.oninput=e=>{S.kb[el.dataset.kb]=e.target.value;save();});
+  $("#kbToAI").onclick=e=>{
+    const ans=[`我的经历资产表：\n${S.out.story||"（未填）"}`,`我的天赋信号：\n${S.out.talent||"（未填）"}`,
+      `我的案例素材：\n${S.out.cases||"（未填）"}`,`我已定的库名：${S.kb.name||"（未填）"}`,
+      `我已定的层级：\n${S.kb.layers||"（未填）"}`].join("\n\n");
+    copy(PROMPTS.kbBuild(ans),e.target);};
+}
+
+// ── 创作工具包 ──
+function renderCreatorSec(){
+  const show=S.stage===2;
+  $("#sec-creator").classList.toggle("hidden",!show); if(!show) return;
+  $("#sec-creator").innerHTML=`
+    <div class="sech">
+      <h2>创作工具包</h2>
+      <div class="sd">7 个方法论 skill，按创作顺序排。点「复制调用指令」把指令带走，粘给自己的 AI 就能用。</div>
+    </div>
+    <div class="card">
+      <div class="navl" style="margin-top:0">创作流程（七步）</div>
+      <div class="steps5">
+        ${CREATOR_FLOW.map((f,i)=>{const t=CREATOR_TOOLS.find(x=>x.id===f.tool);
+          return `<div class="s5"><div class="s5n">${i+1}</div><div style="flex:1">
+            <div class="s5t">${esc(f.t)} <span style="font-size:11.5px;color:var(--ink3);font-weight:400">${esc(t.tag)}</span></div>
+            <div class="s5d">${esc(f.d)}</div></div></div>`;}).join("")}
+      </div>
+    </div>
+    <div class="card">
+      <div class="navl" style="margin-top:0">每个工具怎么用</div>
+      ${CREATOR_TOOLS.map(t=>`
+        <div class="prompt">
+          <div class="ph"><span class="pn">${esc(t.name)} <span style="font-size:11.5px;color:var(--ink3);font-weight:400">${t.install?"要安装":"方法论"}</span></span>
+            <button class="cpy" data-t="${esc(t.call)}">复制调用指令</button></div>
+          <div class="pt">${esc(t.what)}</div>
+          <div class="pt" style="color:var(--ink3)">不是：${esc(t.not)}</div>
+          <div class="pt">什么时候用：${esc(t.when)}</div>
+          ${t.install?`<div class="pt" style="padding:10px 13px;background:var(--accent-s);border-radius:10px;color:#5a3a30">安装：${esc(t.installNote)}</div>`:""}
+          <div class="pt" style="color:var(--ok)">产出：${esc(t.output)}</div>
+        </div>`).join("")}
+      <div class="note" style="margin-top:14px">
+        <b>前 6 个是方法论</b>：纯思考框架，粘贴调用指令就能用，不用装。<br>
+        <b>小红书全流程和公众号流水线</b>：执行型 Skill（有脚本，能真的发布），要先装进 ~/.workbuddy/skills/。装法在彩彩的工作台里。
+      </div>
+    </div>`;
+  $$("#sec-creator .cpy").forEach(b=>b.onclick=()=>copy(b.dataset.t,b));
+}
+
+// ── 诊断工具箱（给学员看的预期管理）──
+function renderDiag(){
+  $("#toolBox").innerHTML=Object.values(TOOLS).map(t=>`
+    <div class="dc"><div class="dn">${esc(t.name)}</div><div class="db">${esc(t.body)}</div></div>`).join("");
+}
+
+// ── 复制单组 / 导出 ──
+function buildGroup(gi){
+  const s=STAGES[S.stage],g=s.groups[gi],L=[];
+  L.push(`【${POSTER.title} · ${s.name}】${g.g}`);
+  L.push(`方法出处：${g.from}`);L.push("");
+  g.qs.forEach((q,qi)=>{
+    L.push(`${qi+1}. ${q.q}`);
+    if(q.hint) L.push(`   提示：${q.hint}`);
+    L.push(`   出处：${q.from}`);
+    const v=(S.q[qKey(S.stage,gi,qi)]||"").trim();
+    L.push(v?"   我的回答："+v.split("\n").join("\n   "):"   我的回答：（未填）");
+    L.push("");});
+  L.push("—— 我的收获和卡点");L.push("");
+  return L.join("\n");
+}
+function buildDoc(){
+  const s=STAGES[S.stage],L=[];
+  L.push(`# ${POSTER.title} · ${s.name}（${s.right}）`);
+  L.push(`> 阶段：${s.months}｜目标：${s.goal}`);
+  L.push(`> 我参考的书：${s.books.join(" / ")}`);
+  L.push(`> 导出时间：${new Date().toLocaleString("zh-CN")}`);
+  L.push("");L.push("---");L.push("");
+  L.push("## 一、引导问题与我的回答");L.push("");
+  s.groups.forEach((g,gi)=>{
+    L.push(`### ${g.g}`);L.push(`> 方法出处：${g.from}`);L.push("");
+    g.qs.forEach((q,qi)=>{
+      L.push(`**${qi+1}. ${q.q}**`);
+      if(q.hint) L.push(`*提示：${q.hint}*`);
+      L.push(`*出处：${q.from}*`);L.push("");
+      const v=(S.q[qKey(S.stage,gi,qi)]||"").trim();
+      L.push(v?v.split("\n").map(x=>"> "+x).join("\n"):"> （未填）");L.push("");});});
+  L.push("---");L.push("");L.push("## 二、我的产出物");L.push("");
+  s.deliverables.forEach(d=>{
+    L.push(`### ${d.label}`);L.push(`*${d.hint}*`);L.push("");
+    const v=(S.out[d.k]||"").trim();
+    L.push(v?v.split("\n").map(x=>"> "+x).join("\n"):"> （未填）");L.push("");});
+  if(S.stage===0){
+    L.push("---");L.push("");L.push("## 三、我的知识库搭建");L.push("");
+    L.push(`**${KB_BUILD.why}**`);L.push("");
+    KB_BUILD.steps.forEach((st,i)=>{L.push(`**${st.t}**`);L.push(st.d);L.push(`*这一步要交出来：${st.out}*`);L.push("");});
+    L.push("**知识卡四要素**");L.push(KB_BUILD.cardTemplate.map(x=>"- "+x).join("\n"));L.push("");
+    L.push("**我的库名**："+(S.kb.name||"（未填）"));L.push("");
+    L.push("**我的四层结构**");L.push((S.kb.layers||"（未填）").split("\n").map(x=>"> "+x).join("\n"));L.push("");
+    L.push("**先放进去的 20 条**");L.push((S.kb.first20||"（未填）").split("\n").map(x=>"- "+x).join("\n"));L.push("");
+    L.push("**装上 ima 后测这 5 个问题**");KB_BUILD.testQuestions.forEach((q,i)=>L.push(`${i+1}. ${q}`));L.push("");
+    L.push("**我的测试结果**");L.push((S.kb.test||"（未填）").split("\n").map(x=>"> "+x).join("\n"));L.push("");}
+  L.push("---");L.push("");L.push("## 四、给彩彩的诊断请求");L.push("");
+  L.push("请帮我做三件事：");
+  L.push("1. 从上面的回答里，提炼最重要的 3 条，每条说清它意味着什么");
+  L.push(`2. 用「${s.bookWhy}」这个方法检验我有没有漏掉关键信息——漏在哪`);
+  L.push("3. 指出我最矛盾或最含糊的地方，真答案通常藏在那里");
+  L.push("");L.push("另外，这一阶段我只该做哪一件事？其他先放掉。");
+  L.push("");L.push("---");L.push("");
+  L.push("*由 AI阅读变现 · 商业私教陪跑工作台生成。数据存在本地浏览器。*");
+  return L.join("\n");
+}
+$("#copyMd").onclick=e=>copy(buildDoc(),e.target);
+$("#dlJson").onclick=exportJSON;
+$("#previewBtn").onclick=()=>{const b=$("#previewBox");
+  if(!b.classList.contains("hidden")){b.classList.add("hidden");return;}
+  b.classList.remove("hidden");b.innerHTML=`<div class="preview">${esc(buildDoc())}</div>`;};
+$("#aiAll").onclick=e=>{
+  const s=STAGES[S.stage];
+  const ans=s.groups.map((g,gi)=>`【${g.g}】\n`+g.qs.map((q,qi)=>{
+    const v=(S.q[qKey(S.stage,gi,qi)]||"").trim();
+    return `${qi+1}. ${q.q}\n${v||"（未填）"}`;}).join("\n")).join("\n\n");
+  const outs=s.deliverables.map(d=>`${d.label}：\n${(S.out[d.k]||"").trim()||"（未填）"}`).join("\n\n");
+  copy(`我在做「${s.name}」阶段（${s.right}）。这是我的引导问题回答：\n\n${ans}\n\n这是我的产出物：\n\n${outs}\n\n请按这个阶段的方法（${s.bookWhy}）帮我：\n1) 提炼最重要的 3 条，每条说清它意味着什么\n2) 指出我漏掉了什么关键信息\n3) 指出我最矛盾的地方\n4) 这一阶段我只该做哪一件事`,e.target);};
+
+// ══════════════ 阶段报告（导师端） ══════════════
+const isCoach = () => S.mode === "coach";
+if(!S.rep || typeof S.rep!=="object") S.rep = {};
+const repOf = i => {
+  if(!S.rep[i]) S.rep[i] = { text:"", done:false, ai:"", mine:"", final:"" };
+  return S.rep[i];
+};
+const REPORT_TITLE = ["个人商业资产报告","定位与产品阶梯方案","90 天内容与成交作战图"];
+const REPORT_DESC = [
+  "盘点结果 + 第一能力判定 + 3 个可变现方向 + 高价值定位建议。生成后由彩彩补充判断，定稿即锁定。",
+  "一句话定位 + 占位词 + 产品名 + 购买理由 + 产品阶梯 + 热点词建议。读取第一阶段定稿作为上游。",
+  "图文矩阵 + 30 天排期 + 产品故事 + 私聊话术 + 反馈闭环。保留「AI 建议 / 我的判断 / 最终方案」三栏。"
+];
+
+function qaList(si, gi){
+  const g = STAGES[si].groups[gi], L=[];
+  g.qs.forEach((q,qi)=>{
+    const v=(S.q[qKey(si,gi,qi)]||"").trim();
+    if(v) L.push(`- ${q.q}\n  → ${v.split("\n").join("；")}`);
+  });
+  return L.length ? L.join("\n") : "- （本组尚未填写）";
+}
+function outList(si){
+  return STAGES[si].deliverables.map(d=>{
+    const v=(S.out[d.k]||"").trim();
+    return `- **${d.label}**：${v ? v.split("\n").join("；") : "（未填）"}`;
+  }).join("\n");
+}
+function upstream(i){
+  const p = S.rep[i-1];
+  if(!p || !p.text) return "（上游阶段尚未生成报告）";
+  return p.text.split("\n").filter(l=>l.trim()).slice(0,14).map(l=>"> "+l).join("\n");
+}
+
+function genRep0(){
+  return `# 个人商业资产盘点｜初步诊断报告
+
+> 由工作台依据学员回答自动聚合。标注「〔待补充〕」处需彩彩补充判断，补充后定稿。
+
+## 一、资产清单
+
+### 经历资产（A 组）
+${qaList(0,0)}
+
+### 能力与天赋（B 组）
+${qaList(0,1)}
+
+### 案例素材（C 组）
+${qaList(0,2)}
+
+### 沉淀形式（D 组）
+${qaList(0,3)}
+
+## 二、第一能力判定
+- 候选能力：〔待补充：从「顺手但别人觉得难」「别人说只有你能做」中提炼〕
+- 判定依据：〔待补充〕
+- 结论（最有价值的那一个能力）：〔待补充〕
+
+## 三、3 个可变现方向
+### 方向一
+- 名称：〔待补充〕
+- 目标人群：〔待补充〕
+- 可交付什么：〔待补充〕
+- 适配度 / 竞争度 / 交付难度 / 客单价区间：〔待补充〕
+
+### 方向二
+- 名称：〔待补充〕
+- 目标人群：〔待补充〕
+- 可交付什么：〔待补充〕
+- 适配度 / 竞争度 / 交付难度 / 客单价区间：〔待补充〕
+
+### 方向三
+- 名称：〔待补充〕
+- 目标人群：〔待补充〕
+- 可交付什么：〔待补充〕
+- 适配度 / 竞争度 / 交付难度 / 客单价区间：〔待补充〕
+
+## 四、高价值定位建议
+1. 〔待补充〕
+2. 〔待补充〕
+
+## 五、不建议做的方向
+〔待补充：写明原因，避免学员走错〕
+
+## 六、这一阶段只做一件事
+〔待补充〕
+
+---
+## 七、学员产出物原文
+${outList(0)}
+`;
+}
+
+function genRep1(){
+  return `# 定位与产品搭建｜定位与产品阶梯方案
+
+## 〇、上游结论（来自第一阶段定稿）
+${upstream(1)}
+
+## 一、一句话定位
+我是〔　〕，帮〔　〕，解决〔　〕。
+
+- 8 岁小孩能听懂吗：〔待补充〕
+- 换成同行是否还成立：〔待补充〕
+- 与已占位者的差异：〔待补充〕
+
+## 二、要占的那个词
+- 词：〔待补充〕
+- 为什么是它：〔待补充〕
+- 现在被谁占着：〔待补充〕
+
+## 三、产品名 + 标语 + 符号方向
+- 产品名（三个候选）：〔待补充〕
+- 标语：〔待补充〕
+- 符号：〔待补充〕
+
+## 四、一句购买理由
+〔待补充：不是功能描述，是用户心里那句「我想要」〕
+
+## 五、产品阶梯
+| 层级 | 名称 | 价格带 | 交付物 | 验证方式 |
+|---|---|---|---|---|
+| 引流品 | 〔待补充〕 | 9.9–99 | 〔待补充〕 | 〔待补充〕 |
+| 主力品 | 〔待补充〕 | 999–2999 | 〔待补充〕 | 〔待补充〕 |
+| 高客单 | 〔待补充〕 | 5000+ | 〔待补充〕 | 〔待补充〕 |
+
+## 六、定价与引流路径
+〔待补充：三档之间用户被什么带过去，每一档的升级理由〕
+
+## 七、热点词与命名建议
+〔待补充：结合当下平台热词，给命名和卖点文案建议〕
+
+## 八、学员回答原文
+### 定位（A 组）
+${qaList(1,0)}
+### 产品形态（B 组）
+${qaList(1,1)}
+### 命名与购买理由（C 组）
+${qaList(1,2)}
+### 变现路径（D 组）
+${qaList(1,3)}
+
+---
+## 九、学员产出物原文
+${outList(1)}
+`;
+}
+
+function genRep2(){
+  return `# 内容与成交实战｜90 天内容与成交作战图
+
+## 〇、上游结论
+### 第一阶段
+${upstream(1)}
+### 第二阶段
+${upstream(2)}
+
+## 一、图文矩阵分工
+| 平台 | 作用 | 频次 | 内容类型 |
+|---|---|---|---|
+| 朋友圈 | 转化 | 每天 1–3 条 | 过程、案例、成果 |
+| 小红书 | 拉新 | 每周 3–5 篇 | 干货、清单、拆解 |
+| 公众号 | 沉淀 | 每周 1 篇 | 深度长文、方法论 |
+
+## 二、内容支柱与配比
+〔待补充：长期发哪几类，各占多少比例〕
+
+## 三、30 天内容排期
+| 日期 | 平台 | 选题 | 目的 |
+|---|---|---|---|
+| D1 | 〔待补充〕 | 〔待补充〕 | 拉新 / 信任 / 成交 |
+| D2 | 〔待补充〕 | 〔待补充〕 | 拉新 / 信任 / 成交 |
+| D3 | 〔待补充〕 | 〔待补充〕 | 拉新 / 信任 / 成交 |
+
+## 四、产品故事文案
+〔待补充：一个人、一个困境、一个转变〕
+
+## 五、私域承接与私聊话术
+- 第一句话：〔待补充〕
+- 问价时第一句：〔待补充〕
+- 三个常见拒绝的解法：〔待补充〕
+
+## 六、用户反馈闭环
+〔待补充：怎么收、多久收、怎么让她看见自己变好〕
+
+## 七、成交 SOP 执行记录
+${sopBlock()}
+
+## 八、学员回答原文
+### 内容方案（A 组）
+${qaList(2,0)}
+### 私域承接（B 组）
+${qaList(2,1)}
+### 私聊沟通与成交（C 组）
+${qaList(2,2)}
+### 用户反馈闭环（D 组）
+${qaList(2,3)}
+
+---
+## 九、学员产出物原文
+${outList(2)}
+`;
+}
+function genRep(i){ return i===0 ? genRep0() : i===1 ? genRep1() : genRep2(); }
+
+function renderReports(){
+  const sec = $("#sec-report");
+  if(!sec) return;
+  if(!isCoach()){ sec.classList.add("hidden"); sec.innerHTML=""; return; }
+  sec.classList.remove("hidden");
+  const i = S.stage, r = repOf(i);
+  const gated = i>0 && !(S.rep[i-1] && S.rep[i-1].done);
+  const btn = (t,id,cls)=>`<button class="btn ${cls}" id="${id}">${t}</button>`;
+  sec.innerHTML = `
+    <div class="sech">
+      <h2>这一段的报告</h2>
+      <div class="sd">学员只负责填写，报告在导师端生成。生成后可编辑补充，定稿后锁定，下一阶段才能引用。</div>
+    </div>
+    ${gated ? `<div class="gate">上游阶段（${STAGES[i-1].name}）的报告还没定稿。建议先回去定稿，否则这份报告缺少上游结论。</div>` : ""}
+    <div class="rep ${r.done?"locked":""}">
+      <div class="rh">
+        <div class="rtitle">${esc(REPORT_TITLE[i])}</div>
+        <span class="lock ${r.done?"on":(r.text?"wait":"")}">${r.done?"已定稿 🔒":(r.text?"待定稿":"未生成")}</span>
+      </div>
+      <div class="rdesc">${esc(REPORT_DESC[i])}</div>
+      <textarea id="repText" placeholder="点下面「生成初稿」，或直接手写">${esc(r.text)}</textarea>
+      <div class="rfoot">
+        ${btn(r.text?"重新生成":"生成初稿","repGen","a")}
+        ${r.done?btn("解除定稿","repUnlock","g"):btn("定稿并锁定","repLock","g")}
+        ${btn("复制报告","repCopy","g")}
+        ${btn("下载 Markdown","repDl","g")}
+        <span style="font-size:12.5px;color:var(--ink3)">最后修改：${r.text?esc(r.ts||""):"—"}</span>
+      </div>
+      ${i===2?`
+      <div class="duo">
+        <div class="dd ai"><div class="dl">AI 建议</div>
+          <textarea id="repAI" placeholder="把报告交给 AI，它给的建议贴在这里">${esc(r.ai||"")}</textarea></div>
+        <div class="dd mine"><div class="dl">我的判断</div>
+          <textarea id="repMine" placeholder="你认为哪些采纳、哪些不采纳，为什么">${esc(r.mine||"")}</textarea></div>
+        <div class="dd final"><div class="dl">最终方案</div>
+          <textarea id="repFinal" placeholder="两者合并后的定案，写进这里">${esc(r.final||"")}</textarea></div>
+      </div>`:""}
+    </div>`;
+
+  const ta = $("#repText");
+  ta.oninput = e => { r.text = e.target.value; r.ts = new Date().toLocaleString("zh-CN"); save(); };
+  $("#repGen").onclick = () => {
+    if(r.text && !confirm("重新生成会覆盖当前报告内容，确定？")) return;
+    r.text = genRep(i); r.ts = new Date().toLocaleString("zh-CN");
+    if(r.done){ r.done=false; toast("已重新生成，报告解除锁定"); } else toast("初稿已生成");
+    save(); renderReports();
+  };
+  if($("#repLock")) $("#repLock").onclick = () => {
+    if(!(r.text||"").trim()){ toast("报告还是空的，先写或先生成"); return; }
+    r.done = true; save(); renderReports(); renderNav(); toast("已定稿并锁定");
+  };
+  if($("#repUnlock")) $("#repUnlock").onclick = () => { r.done=false; save(); renderReports(); renderNav(); toast("已解除锁定，可继续修改"); };
+  $("#repCopy").onclick = e => copy(r.text, e.target);
+  $("#repDl").onclick = () => download(`${REPORT_TITLE[i]}-${new Date().toISOString().slice(0,10)}.md`, r.text);
+  if($("#repAI")){
+    $("#repAI").oninput = e => { r.ai=e.target.value; save(); };
+    $("#repMine").oninput = e => { r.mine=e.target.value; save(); };
+    $("#repFinal").oninput = e => { r.final=e.target.value; save(); };
+  }
+}
+
+// ── 学员档案 JSON ──
+function exportJSON(){
+  const data = { ...S, _meta:{ app:"AI阅读变现 · 商业私教陪跑工作台", v:7, exportedAt:new Date().toISOString(), stages:STAGES.map(s=>s.name) } };
+  download(`学员档案-${new Date().toISOString().slice(0,10)}.json`, JSON.stringify(data,null,2), "application/json");
+  toast("已导出学员档案");
+}
+
+// ── 成交 SOP（第三段 · 导师端） ──
+const SOP = {
+  chain:[
+    { t:"L1", n:"笔记引流", tag:"供血",
+      d:"三系列内容持续发：6 种输出方向 / 双赛道 / 变现三步。主标锁死，副标轮换，统一钩子——扣「变现」领流程图。",
+      m:"目标写在下方，按自己的节奏定",
+      k:"每篇记 3 个数：曝光 / 扣字 / 加私聊。考核看私聊，不看点赞。" },
+    { t:"L2", n:"资格审查", tag:"筛选",
+      d:"按投入程度分四档：冷、温、热、强意向。只有「想解决问题」的人，才值得花时间。",
+      m:"判断标准：她是想要东西，还是想解决问题",
+      k:"想要东西 → 发资料；想解决问题 → 进 7 天节奏。" },
+    { t:"L3", n:"意向成交", tag:"收口",
+      d:"强意向才用 SPIN。不谈单，先问清情境和卡点，再讲你走过的那条路。",
+      m:"目标写在下方，按自己的节奏定",
+      k:"每次谈完当天写 5 行复盘，不靠记忆。" },
+    { t:"L4", n:"复盘", tag:"校准",
+      d:"每谈一单记 5 行：身份困境、卡点、松动/退缩的那句话、结果、下次改什么。",
+      m:"积累 10 条，真实卡点自己浮出来",
+      k:"每周日 15 分钟，只改一个动作。" }
+  ],
+  grades:[
+    { g:"冷", s:"只扣字领资料", a:"发资料＋一句话介绍，不追问", w:"不投入时间" },
+    { g:"温", s:"领了资料有回音／主动问问题", a:"D3 问反馈，拉进朋友圈深度触达", w:"7 天内 2 次触达" },
+    { g:"热", s:"付过 1.99 / 99、深聊过具体困境、问过「怎么跟你学」", a:"进 7 天节奏（见「培养节奏」）", w:"一周内 4 次" },
+    { g:"强意向", s:"主动问私教／问价格／说「想跟你学」", a:"SPIN 谈话（见「SPIN 谈话」）", w:"48 小时内约谈" }
+  ],
+  rhythm:[
+    { d:"D1", w:"私聊发承诺物＋一句话介绍读书会", n:"只发一次，不追问" },
+    { d:"D3", w:"朋友圈（不 @ 人）", n:"读书会第 X 周复盘" },
+    { d:"D5", w:"私聊", n:"「资料用了吗？卡在哪一步？」" },
+    { d:"D7", w:"朋友圈官宣预热", n:"不报价，先让人知道有这件事" },
+    { d:"D7 后", w:"停手，转朋友圈日更", n:"官宣后的持续内容，比第 8 次私聊有用" }
+  ],
+  spin:[
+    { n:"① 情景", q:"你现在读书 / 副业是怎么安排的？", h:"问 1–2 个就够，问多了成单率反而降" },
+    { n:"② 困境", q:"这套打法里，卡得最久的是哪一步？", h:"让她自己说出来，不要替她说" },
+    { n:"③ 愿景", q:"这一步通了，三个月后你想让它变成什么样？", h:"替代「放大痛苦」，不制造焦虑" },
+    { n:"④ 解决", q:"我做的事正好是陪人走这一步——我说说我怎么走的，你判断适不适合。", h:"讲路径，不承诺结果" }
+  ],
+  five:[
+    "她打算怎么安排这件事？",
+    "需求是真的吗——她要解决这个问题吗？",
+    "谁做决定，她自己还是需要和人商量？",
+    "预算上有没有现实约束？",
+    "她期望什么时候开始？"
+  ],
+  opens:[
+    { t:"她在考虑", c:"不用急着决定。我更好奇你在考虑什么——是时间排不开，还是不确定这钱花得值？前者我们一起看排期，后者我把能给你的和不能给你的都摊开讲，考虑清楚再来的学员留得最久。" },
+    { t:"现金流紧", c:"先说清楚：现金流紧的时候咬牙报课，我不建议。你现在手上的事里，有没有哪件可以先用免费方法试的？我告诉你怎么试。试完觉得值得，再谈私教。" }
+  ],
+  close:"那你 XX 号之前想一下，到时候我来问你一次，不管答案是哪个都行。",
+  rev:[
+    { l:"1. TA 的身份 / 困境（用原话记）", p:"她在什么阶段，原话怎么说的" },
+    { l:"2. 卡点：价格？时机？信任？还是没想清楚", p:"写真实原因，不写「她说再想想」" },
+    { l:"3. 哪句话让她松动 / 哪句话让她退缩", p:"记原句，下次直接复用或避开" },
+    { l:"4. 成了为什么成；没成约了什么时候再聊", p:"必须给出具体日期" },
+    { l:"5. 下次同类情况我要改什么", p:"一次只改一个" }
+  ]
+};
+function sopState(){
+  S.sop = S.sop || {};
+  const o = S.sop;
+  if(o.tab===undefined) o.tab = 0;
+  if(o.grade===undefined) o.grade = -1;
+  if(!o.ck) o.ck = {};
+  if(!o.rev) o.rev = ["","","","",""];
+  if(!o.goal) o.goal = {day:"", talk:"", strong:""};
+  return o;
+}
+function sopPanes(o, coach){
+  const chain = `<div class="flow">${SOP.chain.map(c=>`
+    <div class="fnode">
+      <div class="ft">${c.t}</div>
+      <div class="fn">${c.n}<span class="fg">${c.tag}</span></div>
+      <div class="fd">${c.d}</div>
+      <div class="fm">${c.m}</div>
+      <div class="fk">${c.k}</div>
+    </div>`).join("")}</div>
+    <div class="sopSub">我的目标（自己填，填完自动保存）</div>
+    <div class="goalRow">
+      <label class="goalItem">每天引流 <input type="number" min="0" data-sgoal="day" value="${esc(o.goal.day)}"> 人</label>
+      <label class="goalItem">每周深聊 <input type="number" min="0" data-sgoal="talk" value="${esc(o.goal.talk)}"> 人</label>
+      <label class="goalItem">本期强意向 <input type="number" min="0" data-sgoal="strong" value="${esc(o.goal.strong)}"> 人</label>
+    </div>
+    <div class="callout"><b>核心原则</b>　先用内容渠道供血，销售动作只花在资格审查过的人身上。这条链路写下来，就不用靠临场状态。</div>`;
+
+  const grades = `
+    <table class="rtable">
+      <tr><th style="width:88px">档位</th><th>判断信号</th><th>我该做什么</th><th style="width:110px">投入节奏</th></tr>
+      ${SOP.grades.map((g,i)=>`<tr class="${o.grade===i?"on":""}">
+        <td><b>${g.g}</b></td><td>${g.s}</td><td>${g.a}</td><td style="color:var(--ink3)">${g.w}</td></tr>`).join("")}
+    </table>
+    <div class="sopSub">这个学员现在在哪一档</div>
+    <div>${SOP.grades.map((g,i)=>`<button class="gchip ${o.grade===i?"on":""}" data-sg="${i}">${g.g}</button>`).join("")}<button class="gchip ${o.grade===-1?"on":""}" data-sg="-1">还没判</button></div>
+    <div class="callout"><b>一句话标准</b>　她是「想要东西」还是「想解决问题」——前者发资料就够，后者才值得你投入 SPIN。</div>`;
+
+  const rhythm = `
+    <div class="sopItem" style="background:var(--accent-s);border-color:var(--accent-l)">
+      <div class="sl">${coach?"只适用于「热」这一档：普通意向的 7 天节奏":"新加来的人，头 7 天这样跟"}</div>
+      <div class="stx">每一步都要让她拿到东西。没有东西可给，就别发——微信不是推送列表，打扰频率宁低勿高。</div>
+    </div>
+    <div class="tl" style="margin-top:22px">${SOP.rhythm.map(r=>`
+      <div class="tli"><div class="td">${r.d}</div><div class="tw">${r.w}</div><div class="tn">${r.n}</div></div>`).join("")}</div>
+    <div class="callout"><b>纪律</b>　D7 之后停手，转朋友圈日更。官宣后的持续内容，比第 8 次私聊有用。</div>`;
+
+  const spin = `
+    <div class="spinGrid">${SOP.spin.map(s=>`
+      <div class="spinCard"><div class="sn">${s.n}</div><div class="sq">${s.q}</div><div class="sh">${s.h}</div></div>`).join("")}</div>
+    <div class="sopSub">成交前五问（谈之前心里过一遍）</div>
+    <div class="chkList">${SOP.five.map((q,i)=>`
+      <label class="chk ${o.ck[i]?"on":""}"><input type="checkbox" data-sc="${i}" ${o.ck[i]?"checked":""}><span>${q}</span></label>`).join("")}</div>
+    <div class="sopSub">两套开场（按她的顾虑选一套）</div>
+    ${SOP.opens.map((op,i)=>`
+      <div class="sopItem"><div class="sl">${op.t}</div><div class="stx">${op.c}</div>
+        <div class="btnrow" style="margin-top:10px"><button class="btn g" data-so="${i}" style="font-size:12px;padding:6px 12px">复制这段</button></div></div>`).join("")}
+    <div class="sopItem" style="background:var(--rose-s);border-color:#F3D6E4">
+      <div class="sl">收尾：明确下一步和时间点</div>
+      <div class="stx">${SOP.close}</div>
+      <div class="btnrow" style="margin-top:10px"><button class="btn g" data-so="2" style="font-size:12px;padding:6px 12px">复制这段</button></div>
+    </div>`;
+
+  const rev = `
+    ${SOP.rev.map((r,i)=>`
+      <div class="sopItem"><div class="sl">${r.l}</div>
+        <textarea data-sr="${i}" placeholder="${r.p}">${esc(o.rev[i]||"")}</textarea></div>`).join("")}
+    <div class="btnrow"><button class="btn g" id="sopRevCopy">复制这份复盘</button><button class="btn g" id="sopRevClear">清空</button></div>
+    <div class="callout"><b>每周日 15 分钟</b>　① 本周引流 ___ 人（对比你定的日标）｜深聊 ___ 人｜新增强意向 ___ 人　② 哪条内容私聊最多？下周翻拍它的变体　③ 流失原因最高频的是 ___　④ 下周只改一个动作：___</div>`;
+
+  return {chain, grades, rhythm, spin, rev};
+}
+function renderSop(){
+  const sec = $("#sec-sop"); if(!sec) return;
+  if(S.stage!==2){ sec.classList.add("hidden"); sec.innerHTML=""; return; }
+  sec.classList.remove("hidden");
+  const o = sopState();
+  const coach = isCoach();
+  const P = sopPanes(o, coach);
+  const list = coach
+    ? [["链路地图",P.chain],["资格审查",P.grades],["培养节奏",P.rhythm],["SPIN 谈话",P.spin],["复盘记录",P.rev]]
+    : [["链路地图",P.chain],["培养节奏",P.rhythm]];
+  const tab = o.tab < list.length ? o.tab : 0;
+  const desc = coach
+    ? "第三段不只要做出内容，还要卖出去。这套是彩彩在跑的链路：先用内容供血，再把时间只花在够格的人身上，最后用一套固定谈话收口。"
+    : "这一段不只做出内容，还要卖出去。先看整条链路怎么走：内容供血 → 挑出值得花时间的人 → 谈话 → 复盘。目标写在第一页最下面，填你自己的数。";
+  sec.innerHTML = `
+    <div class="sech">
+      <div class="sk">SOP</div>
+      <h2>成交 SOP｜从一条笔记到一单成交</h2>
+      <div class="sd">${desc}</div>
+    </div>
+    <div class="card">
+      <div class="sopTabs">${list.map((t,i)=>`<button data-stab="${i}" class="${tab===i?"on":""}">${t[0]}</button>`).join("")}</div>
+      <div class="sopPanes">${list.map((t,i)=>`<div class="pane ${tab===i?"on":""}">${t[1]}</div>`).join("")}</div>
+    </div>`;
+  $$("#sec-sop [data-stab]").forEach(b=>b.onclick=()=>{S.sop.tab=+b.dataset.stab;save();renderSop();});
+  $$("#sec-sop [data-sg]").forEach(b=>b.onclick=()=>{S.sop.grade=+b.dataset.sg;save();renderSop();});
+  $$("#sec-sop [data-sc]").forEach(el=>el.onchange=()=>{S.sop.ck[el.dataset.sc]=el.checked;save();renderSop();});
+  $$("#sec-sop [data-sr]").forEach(el=>el.oninput=()=>{S.sop.rev[el.dataset.sr]=el.value;save();});
+  $$("#sec-sop [data-sgoal]").forEach(el=>el.oninput=()=>{S.sop.goal[el.dataset.sgoal]=el.value;save();});
+  $$("#sec-sop [data-so]").forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.so;
+    copy(i<2 ? SOP.opens[i].c : SOP.close, b);
+  });
+  const rc=$("#sopRevCopy");
+  if(rc) rc.onclick=e=>copy(SOP.rev.map((r,i)=>`${r.l}\n${(S.sop.rev[i]||"").trim()||"（未填）"}`).join("\n\n"), e.target);
+  const rl=$("#sopRevClear");
+  if(rl) rl.onclick=()=>{S.sop.rev=["","","","",""];save();renderSop();toast("已清空");};
+}
+function sopBlock(){
+  const o = sopState();
+  const g = o.grade>=0 ? SOP.grades[o.grade].g : "未判";
+  const ck = SOP.five.map((q,i)=>`${o.ck[i]?"☑":"☐"} ${q}`).join("\n");
+  const rv = SOP.rev.map((r,i)=>`${r.l}\n${(o.rev[i]||"").trim()||"（未填）"}`).join("\n\n");
+  const gl = `每天引流 ${o.goal.day||"未定"} 人｜每周深聊 ${o.goal.talk||"未定"} 人｜本期强意向 ${o.goal.strong||"未定"} 人`;
+  return `- 当前档位：${g}\n- 学员目标：${gl}\n- 成交前五问：\n${ck}\n\n复盘备忘录：\n${rv}`;
+}
+
+function renderAll(){
+  if(S.mode==="coach" && !S.coach) S.mode="student";
+  $$(".modesw button").forEach(b=>b.classList.toggle("on", b.dataset.mode === S.mode));
+  $("#coachTools").classList.toggle("hidden", !isCoach());
+  renderNav();renderStageSec();renderQs();renderOut();renderReports();renderAfter();renderKBSec();renderCreatorSec();renderSop();renderRefsSec();renderTopicSec();renderDiag();
+}
+
+// 模式切换
+// 导师端密码（改这里换成你自己的；纯前端只能挡一下，不是真安全）
+const COACH_PW = "caicai2026";
+
+$$(".modesw button").forEach(b=>b.onclick=()=>{
+  if(b.dataset.mode==="coach" && !S.coach){
+    const pw = prompt("导师端需要密码");
+    if(pw===null) return;
+    if(pw.trim() !== COACH_PW){ toast("密码不对，留在学员端"); return; }
+    S.coach = true;
+  }
+  S.mode=b.dataset.mode; save(); renderAll();
+  toast(b.dataset.mode==="coach"?"已切到导师端":"已切到学员端");
+});
+
+// 导入学员档案
+$("#importBtn").onclick = () => $("#importFile").click();
+$("#importFile").onchange = e => {
+  const f = e.target.files[0]; if(!f) return;
+  const fr = new FileReader();
+  fr.onload = () => {
+    try{
+      const d = JSON.parse(fr.result);
+      if(!d || typeof d!=="object" || !d.q) throw new Error("格式不对");
+      ["stage","q","out","kb","through","rep"].forEach(k=>{ if(d[k]!==undefined) S[k]=d[k]; });
+      S.mode = "coach";
+      save(); renderAll(); toast("学员档案已导入");
+    }catch(err){ toast("导入失败：不是有效的学员档案"); }
+    e.target.value = "";
+  };
+  fr.readAsText(f);
+};
+
+renderAll();
+</script>
+</body>
+</html>
